@@ -33,7 +33,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 DEBUG = os.environ.get("DEBUG", False)
 
-ALLOWED_HOSTS = [os.environ.get("LOCAL_HOST")]
+ALLOWED_HOSTS = [os.environ.get("LOCAL_HOST"), os.environ.get("HEROKU_HOST")]
 
 
 # Application definition
