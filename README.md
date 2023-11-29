@@ -26,6 +26,10 @@ Database connection:
 - dj_database_url
 - psycopg2
 
+Authentication:
+
+- [django-allauth (0.44.0)](https://docs.allauth.org/en/latest/)
+
 Deployment server:
 
 - gunicorn
