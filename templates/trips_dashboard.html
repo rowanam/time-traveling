@@ -2,8 +2,37 @@
 
 {% block content %}
 
-<h1>Trips Dashboard</h1>
+<div class="container-fluid">
 
-<a href="{% url 'add_custom_trip' %}">Add a trip</a>
+    <h1>Trips Dashboard</h1>
+
+    <a href="{% url 'add_custom_trip' %}">Add a trip</a>
+
+    <div class="row">
+
+        <!-- Trips Column -->
+        <div class="col-12 mt-3 left">
+            <div class="row">
+                {% for trip in trips %}
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                    <h2 class="card-title">{{ trip.title }}</h2>
+                                <hr>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if forloop.counter|divisibleby:3 %}
+                        </div>
+                        <div class="row">
+                    {% endif %}
+
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</div>
 
 {% endblock %}

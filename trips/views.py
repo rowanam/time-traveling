@@ -17,7 +17,12 @@ class TripList(View):
     """A class-based view for the trips dashboard page - home page for logged-in users."""
 
     def get(self, request):
-        return render(request, "trips_dashboard.html")
+        user = request.user
+        trips = CustomTrip.objects.filter(user=user)
+        context = {
+            "trips": trips
+        }
+        return render(request, "trips_dashboard.html", context)
 
 
 class AddCustomTrip(View):
