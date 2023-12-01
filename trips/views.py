@@ -3,7 +3,7 @@ from django.views import View
 from django.http import HttpResponseRedirect
 from django.forms import formset_factory
 from .forms import CustomTripForm, CustomLocationForm
-from .models import CustomTrip
+from .models import CustomTrip, CustomLocation
 
 
 class Welcome(View):
@@ -23,6 +23,22 @@ class TripList(View):
             "trips": trips
         }
         return render(request, "trips_dashboard.html", context)
+
+
+class TripDetail(View):
+    """ A class-based view to display details of a trip. """
+
+    def get(self, request, trip_id):
+        user = request.user
+        user_trips_queryset = CustomTrip.objects.filter(user=user)
+        trip = get_object_or_404(user_trips_queryset, id=trip_id)
+        trip_locations = CustomLocation.objects.filter(trip=trip)
+
+        context = {
+            "trip": trip,
+            "locations": trip_locations
+        }
+        return render(request, "view_custom_trip.html", context)
 
 
 class AddCustomTrip(View):

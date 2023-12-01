@@ -7,4 +7,5 @@ urlpatterns = [
     path("dashboard/", views.TripList.as_view(), name="trips_dashboard"),
     path("add-custom-trip/", views.AddCustomTrip.as_view(), name="add_custom_trip"),
     path("add-custom-locations/<int:trip_pk>", views.AddCustomLocations.as_view(), name="add_custom_locations"),
+    path("trip/<int:trip_id>", views.TripDetail.as_view(), name="view_custom_trip"),
 ]
