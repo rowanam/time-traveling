@@ -11,6 +11,10 @@ class CustomTrip(models.Model):
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
 
+    def __str__(self):
+        """ Return string representation of object """
+        return self.title
+
 
 class CustomLocation(models.Model):
     """ A class-based model for the locations in a user-created custom trip. """

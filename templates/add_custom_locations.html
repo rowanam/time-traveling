@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Add Locations</h1>
+<p>{{ trip.title }} created by {{ trip.user }}</p>
+<!-- <form method="POST" action="">
+    {% csrf_token %}
+
+    <p>{{ trip.title }} created by {{ trip.user }}</p>
+
+    {{ form.as_p }}
+    {{ form.as_p }}
+    <div>
+        <p>
+            <button id="add-location">Add Location</button>
+        </p>
+    </div>
+    <div>
+        <p>
+            <button type="submit">Create Trip</button>
+        </p>
+    </div>
+</form> -->
+
+
+
+<!-- <form method="POST" action="">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    {% for form in formset.forms %}
+    {{ form.as_p }}
+    {% endfor %}
+    <div style="display:none;" id="form_template">
+        {{ formset.empty_form.as_p }}
+    </div>
+    <div id="forms"></div>
+    <div>
+        <p>
+            <button id="add-location">Add Location</button>
+        </p>
+    </div>
+    <div>
+        <p>
+            <button type="submit">Create Trip</button>
+        </p>
+    </div>
+</form> -->
+
+<form method="POST">
+{% csrf_token %}
+{{ formset.management_form }}
+{% for form in formset.forms %}
+    <div class='table'>
+    <table class='no_error'>
+        {{ form.as_table }}
+    </table>
+    </div>
+{% endfor %}
+<input type="button" value="Add More" id="add_more">
+<button type="submit">Create Trip</button>
+</form>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+{% load static %}
+
+<script src="{% static 'js/add_custom_location.js' %}"></script>
+
+{% endblock %}
