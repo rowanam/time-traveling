@@ -10,6 +10,11 @@ footer {
     background-color: #181818;
 }
 
-#map {
+.trip-map {
+    height: 40vh;
+    width: 55vw;
+}
+
+.full-map {
     height: 80vh;
 }

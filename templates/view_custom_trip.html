@@ -1,15 +1,54 @@
 {% extends "base.html" %}
 
+{% block styles %}
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+{% endblock %}
+
+
 {% block content %}
 
 <div class="container-fluid">
     <h1>{{ trip.title }}</h1>
-    
+
     <ul>
         {% for location in locations %}
         <li>{{ location.name }}</li>
         {% endfor %}
     </ul>
+
+    <div class="trip-map" id="map"></div>
 </div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<!-- Leaflet -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+<!-- Leaflet Sample Map -->
+<script>
+    // initialize Leaflet
+    var map = L.map('map').setView({
+        lon: 0,
+        lat: 0
+    }, 2);
+
+    // add the OpenStreetMap tiles
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+    }).addTo(map);
+
+    // show the scale bar on the lower left corner
+    L.control.scale({
+        imperial: true,
+        metric: true
+    }).addTo(map);
+</script>
 
 {% endblock %}
