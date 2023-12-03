@@ -19,14 +19,12 @@ class TripList(View):
     def get(self, request):
         user = request.user
         trips = CustomTrip.objects.filter(user=user)
-        context = {
-            "trips": trips
-        }
+        context = {"trips": trips}
         return render(request, "trips_dashboard.html", context)
 
 
 class TripDetail(View):
-    """ A class-based view to display details of a trip. """
+    """A class-based view to display details of a trip."""
 
     def get(self, request, trip_id):
         user = request.user
@@ -34,9 +32,13 @@ class TripDetail(View):
         trip = get_object_or_404(user_trips_queryset, id=trip_id)
         trip_locations = CustomLocation.objects.filter(trip=trip)
 
+        # sample coordinates
+        coordinates = [[45.51, -122.68], [37.77, -122.43], [34.04, -118.2]]
+
         context = {
             "trip": trip,
-            "locations": trip_locations
+            "locations": trip_locations,
+            "coordinates": coordinates,
         }
         return render(request, "view_custom_trip.html", context)
 
@@ -45,13 +47,13 @@ class AddCustomTrip(View):
     """A class-based view for adding a new custom trip."""
 
     def get(self, request):
-        """ Render the add trip template """
+        """Render the add trip template"""
         form = CustomTripForm()
         context = {"form": form}
         return render(request, "add_custom_trip.html", context)
 
     def post(self, request):
-        """ Post the completed add trip form """
+        """Post the completed add trip form"""
         form = CustomTripForm(data=request.POST)
 
         if form.is_valid():
