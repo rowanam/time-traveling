@@ -1,16 +1,63 @@
 {% extends "base.html" %}
 
+{% block styles %}
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css">
+
+<!-- leaflet-geosearch -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.0.4/dist/geosearch.css">
+
+{% endblock %}
+
+
 {% block content %}
 
-<h1>New Trip</h1>
-<form method="POST" action="">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <div>
-        <p>
-            <button type="submit">Create Trip</button>
-        </p>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6">
+
+            <h1>New Trip</h1>
+
+            <form method="POST" action="">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <h2>Locations</h2>
+                <ul id="locations-list">
+                </ul>
+                <div>
+                    <p>
+                        <button id="add-location">Add Location</button>
+                    </p>
+                </div>
+                <div>
+                    <p>
+                        <button type="submit">Create Trip</button>
+                    </p>
+                </div>
+            </form>
+
+        </div>
+        <div class="col-6">
+            <div class="select-location-map" id="map"></div>
+        </div>
     </div>
-</form>
+
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+{% load static %}
+
+<!-- Leaflet -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+<!-- leaflet-geosearch -->
+<script src="https://unpkg.com/leaflet-geosearch@3.0.4/dist/geosearch.umd.js"></script>
+
+<script src="{% static 'js/add_custom_trip.js' %}"></script>
 
 {% endblock %}

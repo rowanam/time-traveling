@@ -14,7 +14,7 @@ An app to visualize your travels
 ## Technologies Used
 
 - [Django (v3.2)](https://docs.djangoproject.com/en/3.2/)
-- Google Maps API
+- Leaflet
 - [Bootstrap (v5.3)](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
 - [Cloudinary](https://cloudinary.com/) - media storage
 - [ElephantSQL](https://www.elephantsql.com/) - external database
@@ -29,6 +29,10 @@ Database connection:
 Authentication:
 
 - [django-allauth (0.44.0)](https://docs.allauth.org/en/latest/)
+
+Map interaction:
+
+- [leaflet-geosearch](https://github.com/smeijer/leaflet-geosearch)
 
 Deployment server:
 

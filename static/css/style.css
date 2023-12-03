@@ -10,6 +10,13 @@ footer {
     background-color: #181818;
 }
 
+/* MAPS STYLES */
+
+.select-location-map {
+    height: 40vh;
+    width: 50vw;
+}
+
 .trip-map {
     height: 40vh;
     width: 55vw;
@@ -17,4 +24,10 @@ footer {
 
 .full-map {
     height: 80vh;
+}
+
+/* FORMS STYLES */
+
+#locations-list li {
+    list-style-type: none;
 }
