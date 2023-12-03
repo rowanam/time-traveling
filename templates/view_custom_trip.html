@@ -13,12 +13,6 @@
 <div class="container-fluid">
     <h1>{{ trip.title }}</h1>
 
-    <ul>
-        {% for location in locations %}
-        <li>{{ location.name }}</li>
-        {% endfor %}
-    </ul>
-
     <div class="trip-map" id="map"></div>
 </div>
 

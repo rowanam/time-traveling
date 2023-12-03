@@ -1,5 +1,5 @@
 from django import forms
-from .models import CustomTrip, CustomLocation
+from .models import CustomTrip
 
 
 class CustomTripForm(forms.ModelForm):
@@ -7,10 +7,3 @@ class CustomTripForm(forms.ModelForm):
     class Meta:
         model = CustomTrip
         fields = ["title", "start_date", "end_date"]
-
-
-class CustomLocationForm(forms.ModelForm):
-    """ A form for adding a location to a custom trip. """
-    class Meta:
-        model = CustomLocation
-        fields = ["name", "g_place_id", "order"]
