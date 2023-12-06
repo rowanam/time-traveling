@@ -45,8 +45,8 @@ $(document).ready(function () {
         
         // get results from map search and store location name and coordinate data
         let locationName = result.location.label;
-        let lat = result.location.x;
-        let long = result.location.y;
+        let lat = result.location.y;
+        let long = result.location.x;
 
         // add location data and list order to newly created form
         $(`#id_form-${formIndex}-name`).val(locationName);

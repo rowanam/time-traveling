@@ -30,14 +30,14 @@ class TripDetail(View):
         user = request.user
         user_trips_queryset = CustomTrip.objects.filter(user=user)
         trip = get_object_or_404(user_trips_queryset, id=trip_id)
-        trip_locations = CustomLocation.objects.filter(trip=trip)
+        trip_locations = CustomLocation.objects.filter(trip=trip).order_by("order")
 
-        # coordinates_seq = [location["coordinates"] for location in trip.locations]
+        coordinates_seq = [[location.lat, location.long] for location in trip_locations]
 
         context = {
             "trip": trip,
             "locations": trip_locations,
-            # "coordinates": coordinates_seq,
+            "coordinates": coordinates_seq,
         }
         return render(request, "view_custom_trip.html", context)
 
