@@ -11,10 +11,19 @@ class CustomTrip(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="user_custom_trips"
     )
-    locations = models.JSONField()
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
 
     def __str__(self):
         """Return string representation of object"""
         return self.title
+
+
+class CustomLocation(models.Model):
+    """A class-based model for locations in a custom trip."""
+
+    name = models.CharField(max_length=50)
+    trip = models.ForeignKey(CustomTrip, on_delete=models.CASCADE, related_name="locations")
+    lat = models.FloatField()
+    long = models.FloatField()
+    order = models.IntegerField()

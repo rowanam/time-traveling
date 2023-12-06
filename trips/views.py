@@ -1,8 +1,9 @@
 from django.shortcuts import render, reverse, get_object_or_404
 from django.views import View
 from django.http import HttpResponseRedirect
-from .forms import CustomTripForm
-from .models import CustomTrip
+from django.forms import formset_factory
+from .forms import CustomTripForm, CustomLocationsForm
+from .models import CustomTrip, CustomLocation
 
 
 class Welcome(View):
@@ -29,12 +30,14 @@ class TripDetail(View):
         user = request.user
         user_trips_queryset = CustomTrip.objects.filter(user=user)
         trip = get_object_or_404(user_trips_queryset, id=trip_id)
+        trip_locations = CustomLocation.objects.filter(trip=trip)
 
-        coordinates_seq = [location["coordinates"] for location in trip.locations]
+        # coordinates_seq = [location["coordinates"] for location in trip.locations]
 
         context = {
             "trip": trip,
-            "coordinates": coordinates_seq,
+            "locations": trip_locations,
+            # "coordinates": coordinates_seq,
         }
         return render(request, "view_custom_trip.html", context)
 
@@ -56,6 +59,40 @@ class AddCustomTrip(View):
             new_trip = form.save(commit=False)
             new_trip.user = request.user
             new_trip.save()
+            trip_id = new_trip.id
+        else:
+            print("Error")
+
+        return HttpResponseRedirect(reverse("add_custom_locations", args=[trip_id]))
+
+
+class AddCustomLocations(View):
+    """A class-based view for adding locations to a custom trip."""
+
+    def get(self, request, trip_id):
+        user = request.user
+        user_trips_queryset = CustomTrip.objects.filter(user=user)
+        trip = get_object_or_404(user_trips_queryset, id=trip_id)
+
+        CustomLocationsFormSet = formset_factory(CustomLocationsForm, extra=0)
+        formset = CustomLocationsFormSet()
+
+        context = {"trip": trip, "formset": formset}
+
+        return render(request, "add_custom_locations.html", context)
+
+    def post(self, request, trip_id):
+        user = request.user
+        user_trips_queryset = CustomTrip.objects.filter(user=user)
+        trip = get_object_or_404(user_trips_queryset, id=trip_id)
+
+        CustomLocationsFormSet = formset_factory(CustomLocationsForm)
+        formset = CustomLocationsFormSet(data=request.POST)
+        if formset.is_valid():
+            for form in formset:
+                new_location = form.save(commit=False)
+                new_location.trip = trip
+                new_location.save()
         else:
             print("Error")
 

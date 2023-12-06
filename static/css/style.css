@@ -5,6 +5,11 @@ body {
     font-family: Roboto, sans-serif;
 }
 
+.logo {
+    width: 200px;
+    margin-left: 20px;
+}
+
 .navbar,
 footer {
     background-color: #181818;
