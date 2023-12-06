@@ -2,11 +2,15 @@
 
 {% block content %}
 
-<div class="container-fluid">
-
-    <h1>Trips Dashboard</h1>
-
-    <a href="{% url 'add_custom_trip' %}">Add a trip</a>
+<div class="container">
+    <div class="row">
+        <div class="col-9">
+            <h1>Trips Dashboard</h1>
+        </div>
+        <div class="col-3">
+            <a href="{% url 'add_custom_trip' %}">Add a trip</a>
+        </div>
+    </div>
 
     <div class="row">
 

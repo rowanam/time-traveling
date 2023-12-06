@@ -19,16 +19,19 @@
     {% block styles %}
     {% endblock styles %}
 
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" >
+
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-    <title>Travel Dashboard</title>
+    <title>Time Traveling</title>
 </head>
 
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{% url 'home' %}">Time Traveling</a>
+            <a class="navbar-brand" href="{% url 'home' %}"><img class="logo" src="{% static 'images/logo.png' %}"
+                    alt="Time Traveling Logo"></a>
             <span class="navbar-text text-muted">
                 Visualize your travels
             </span>
@@ -68,6 +71,7 @@
     <main class="flex-shrink-0 main-bg">
         {% block content %}
         {% endblock content %}
+        <div class="footer-spacing"></div>
     </main>
 
     <!-- Footer -->

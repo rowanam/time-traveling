@@ -37,3 +37,7 @@ Map interaction:
 Deployment server:
 
 - gunicorn
+
+## Attributions
+
+Logo and favicon - [Logo.com](https://logo.com/)

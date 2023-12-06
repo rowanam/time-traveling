@@ -1,18 +1,52 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,500&family=Lato:wght@100;300;400;700&family=Open+Sans&family=Playfair+Display:ital,wght@0,400;0,600;1,500&family=Poppins&family=Roboto:wght@100;300;400;500;700&display=swap');
 
 body {
     background-color: #252525;
-    font-family: Roboto, sans-serif;
+    font-family: Lato, sans-serif;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Cormorant Garamond', Lato, serif;
 }
 
 .logo {
-    width: 200px;
+    width: 13rem;
     margin-left: 20px;
 }
 
 .navbar,
 footer {
     background-color: #181818;
+}
+
+.navbar {
+    height: 5rem;
+}
+
+.footer-spacing {
+    height: 56px;
+}
+
+.container {
+    margin-top: 1rem;
+}
+
+h1 {
+    font-family: Lato, sans-serif;
+    text-transform: uppercase;
+    font-weight: 300;
+}
+
+.card-body a {
+    text-decoration: none;
+}
+
+.card-title {
+    color: white;
+    font-family: 'Cormorant Garamond';
+    font-weight: 600;
 }
 
 /* MAPS STYLES */
