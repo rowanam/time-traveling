@@ -60,10 +60,9 @@ class AddCustomTrip(View):
             new_trip.user = request.user
             new_trip.save()
             trip_id = new_trip.id
+            return HttpResponseRedirect(reverse("add_custom_locations", args=[trip_id]))
         else:
-            print("Error")
-
-        return HttpResponseRedirect(reverse("add_custom_locations", args=[trip_id]))
+            return render(request, "add_custom_trip.html", {"form": form})
 
 
 class AddCustomLocations(View):

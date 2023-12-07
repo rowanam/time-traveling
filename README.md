@@ -30,6 +30,10 @@ Authentication:
 
 - [django-allauth (0.44.0)](https://docs.allauth.org/en/latest/)
 
+Front-end controls:
+
+- [bootstrap-datepicker](https://github.com/uxsolutions/bootstrap-datepicker)
+
 Map interaction:
 
 - [leaflet-geosearch](https://github.com/smeijer/leaflet-geosearch)

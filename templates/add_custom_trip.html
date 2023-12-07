@@ -1,11 +1,22 @@
 {% extends "base.html" %}
 
+{% block styles %}
+
+<!-- bootstrap-datepicker -->
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css"
+    integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+
+{% endblock %}
+
+
 {% block content %}
 
 <div class="container">
     <h1>New Trip</h1>
 
-    <form method="POST" action="">
+    <form method="POST" autocomplete="off">
         {% csrf_token %}
         {{ form.as_p }}
         <div>
@@ -15,5 +26,19 @@
         </div>
     </form>
 </div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+{% load static %}
+
+<!-- bootstrap-datepicker -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"
+    integrity="sha512-LsnSViqQyaXpD4mBBdRYeP6sRwJiJveh2ZIbW41EBrNmKxgr/LFZIiWT6yr+nycvhvauz8c2nYMhrP80YhG7Cw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="{% static 'js/add_custom_trip.js' %}"></script>
 
 {% endblock %}

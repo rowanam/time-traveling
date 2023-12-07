@@ -119,12 +119,25 @@ footer {
     font-weight: 600;
 }
 
-/* TRIP DETAIL */
+/* ADD TRIP AND LOCATIONS */
 
-/* .trip-timeline {
-    position: relative;
-    left: 12px;
-} */
+.datepicker {
+    padding: 2px 3px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    border: 1px solid rgb(133, 133, 133);
+}
+
+.datepicker table tr td.day:hover,
+.datepicker tfoot tr th:hover {
+    background: #3d9970;
+}
+
+.datepicker table tr td.active {
+    background-image: linear-gradient(to bottom,#3d9970,#276348);
+}
+
+/* TRIP DETAIL */
 
 .trip-timeline-item {
     padding-left: 15px;
