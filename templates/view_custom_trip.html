@@ -11,15 +11,20 @@
 {% block content %}
 
 <div class="container">
-    <h1>{{ trip.title }}</h1>
+    <div class="row">
+        <div class="col-6">
+            <h1>{{ trip.title }}</h1>
 
-    <ul>
-        {% for location in locations %}
-        <li>{{ location.name }}</li>
-        {% endfor %}
-    </ul>
-
-    <div class="trip-map" id="map"></div>
+            <ul class="trip-timeline">
+                {% for location in locations %}
+                <li class="trip-timeline-item">{{ location.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-6">
+            <div class="trip-map" id="map"></div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

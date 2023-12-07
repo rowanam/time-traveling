@@ -92,6 +92,33 @@ footer {
     font-weight: 600;
 }
 
+/* TRIP DETAIL */
+
+/* .trip-timeline {
+    position: relative;
+    left: 12px;
+} */
+
+.trip-timeline-item {
+    padding-left: 15px;
+    padding-bottom: 5px;
+    border-left: 1px solid #3d9970;
+    position: relative;
+    list-style-type: none;
+}
+
+.trip-timeline-item::after {
+    content: "";
+    position: absolute;
+    left: -5.2px;
+    top: 6px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid #3d9970;
+    background-color: #252525;
+}
+
 /* MAPS */
 
 .select-location-map {
@@ -101,7 +128,7 @@ footer {
 
 .trip-map {
     height: 40vh;
-    width: 55vw;
+    width: 100%;
 }
 
 .full-map {

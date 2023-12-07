@@ -22,7 +22,8 @@ let coordinates = JSON.parse(document.getElementById('coordinates').textContent)
 
 // create a red polyline from the array of LatLng points
 var polyline = L.polyline(coordinates, {
-    color: 'red'
+    color: 'orange',
+    weight: 2,
 }).addTo(map);
 
 // zoom the map to the polyline
