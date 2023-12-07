@@ -7,8 +7,8 @@
         <div class="col-9">
             <h1>Trips Dashboard</h1>
         </div>
-        <div class="col-3">
-            <a href="{% url 'add_custom_trip' %}">Add a trip</a>
+        <div class="col-3 button-right-col">
+            <a class="btn btn-basic" href="{% url 'add_custom_trip' %}" role="button">Add a trip</a>
         </div>
     </div>
 
@@ -19,12 +19,11 @@
             <div class="row">
                 {% for trip in trips %}
                     <div class="col-md-4">
-                        <div class="card mb-4 trip-card">
+                        <div class="card mb-4 trip-card rounded-0">
                             <div class="card-body">
                                 <a href="{% url 'view_custom_trip' trip.id %}">
                                     <h2 class="card-title">{{ trip.title }}</h2>
                                 </a>
-                                <hr>
                             </div>
                         </div>
                     </div>

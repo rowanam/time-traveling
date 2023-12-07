@@ -10,6 +10,18 @@ h1 {
     font-weight: 300;
 }
 
+.btn-basic {
+    border: 1px solid #34825f;
+    background-color: #34825f;
+    padding: 5px 8px;
+    border-radius: 0.15rem;
+    height: fit-content;
+}
+
+.btn-basic:hover {
+    border: 1px solid #34825f;
+}
+
 /* HEADER AND FOOTER */
 
 .logo {
@@ -82,8 +94,23 @@ footer {
 
 /* TRIPS DASHBOARD */
 
+.button-right-col {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.trip-card {
+    background-color: #181818;
+    border: none;
+}
+
 .trip-card .card-body a {
     text-decoration: none;
+}
+
+.trip-card .card-body a:hover h2 {
+    color: #3d9970;
 }
 
 .trip-card .card-title {
