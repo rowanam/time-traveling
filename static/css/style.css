@@ -1,15 +1,16 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,500&family=Lato:wght@100;300;400;700&family=Open+Sans&family=Playfair+Display:ital,wght@0,400;0,600;1,500&family=Poppins&family=Roboto:wght@100;300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500&family=Lato:wght@100;300;400;700&display=swap');
 
 body {
     background-color: #252525;
     font-family: Lato, sans-serif;
 }
 
-h1,
-h2,
-h3 {
-    font-family: 'Cormorant Garamond', Lato, serif;
+h1 {
+    text-transform: uppercase;
+    font-weight: 300;
 }
+
+/* HEADER AND FOOTER */
 
 .logo {
     width: 13rem;
@@ -21,7 +22,8 @@ footer {
     background-color: #181818;
 }
 
-.navbar {
+.navbar,
+.header-spacing {
     height: 5rem;
 }
 
@@ -29,27 +31,66 @@ footer {
     height: 56px;
 }
 
+/* BASE PAGES AND LAYOUTS */
+
+.bg-img-container {
+    background: url("../images/main_bg.jpg") center/cover;
+    width: 100vw;
+    height: 100vh;
+}
+
 .container {
-    margin-top: 1rem;
+    padding-top: 1rem;
 }
 
-h1 {
-    font-family: Lato, sans-serif;
-    text-transform: uppercase;
-    font-weight: 300;
+/* WELCOME PAGE */
+
+.page-wrapper {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.card-body a {
+.content-box {
+    width: 65%;
+    padding: 2rem 3rem;
+}
+
+.title-logo {
+    width: 70%;
+}
+
+.welcome-subtitle {
+    font-size: 1.5rem;
+    margin: 1rem 0 1.4rem;
+}
+
+.content-box {
+    background-color: #181818;
+    border-color: #3d9970;
+}
+
+.welcome-card a {
+    color: #3d9970;
+}
+
+/* TRIPS DASHBOARD */
+
+.trip-card .card-body a {
     text-decoration: none;
 }
 
-.card-title {
+.trip-card .card-title {
     color: white;
     font-family: 'Cormorant Garamond';
     font-weight: 600;
 }
 
-/* MAPS STYLES */
+/* MAPS */
 
 .select-location-map {
     height: 40vh;
@@ -65,7 +106,7 @@ h1 {
     height: 80vh;
 }
 
-/* FORMS STYLES */
+/* FORMS */
 
 #locations-list li {
     list-style-type: none;

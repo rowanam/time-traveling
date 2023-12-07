@@ -40,4 +40,5 @@ Deployment server:
 
 ## Attributions
 
-Logo and favicon - [Logo.com](https://logo.com/)
+- Logo and favicon - [Logo.com](https://logo.com/)
+- Main background - [Image by GarryKillian](https://www.freepik.com/free-vector/terrain-big-data-visualization_7941096.htm#query=dark%20map&position=0&from_view=search&track=ais&uuid=7850fb46-cc4c-401c-bb49-be112d860467) on Freepik
