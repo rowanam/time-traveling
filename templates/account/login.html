@@ -1,0 +1,23 @@
+{% extends "background.html" %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Log In" %}{% endblock %}
+
+{% block box %}
+
+<h1>{% trans "Log In" %}</h1>
+
+<p>{% blocktrans %}If you have not created an account yet, then please
+    <a href="{{ signup_url }}">register</a> first.{% endblocktrans %}</p>
+
+<form class="login" method="POST" action="{% url 'account_login' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if redirect_field_value %}
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+    {% endif %}
+    <button class="primaryAction" type="submit">{% trans "Log In" %}</button>
+</form>
+
+{% endblock %}

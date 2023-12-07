@@ -4,19 +4,13 @@
 
 {% load static %}
 
-<div class="page-wrapper">
-    <div class="card text-center rounded-0 content-box welcome-card">
-        <div class="card-body">
-            <h1>
-                <img class="title-logo" src="{% static 'images/logo.png' %}" alt="Time Traveling Logo">
-            </h1>
-            <h2 class="welcome-subtitle">Visualize your travels</h2>
-            <p>Welcome to the app where you can plan trips, track your adventures, and visualize the
-                time you've spent traveling.</p>
-            <p>First time here? <a href="{% url 'account_signup' %}">Register</a> to start building your travel maps.</p>
-            <p>Or <a href="{% url 'account_login' %}">log in</a> if you are a returning user.</p>
-        </div>
-    </div>
-</div>
+<h1>
+    <img class="title-logo" src="{% static 'images/logo.png' %}" alt="Time Traveling Logo">
+</h1>
+<h2 class="welcome-subtitle">Visualize your travels</h2>
+<p>Welcome to the app where you can plan trips, track your adventures, and visualize the
+    time you've spent traveling.</p>
+<p>First time here? <a href="{% url 'account_signup' %}">Register</a> to start building your travel maps.</p>
+<p>Or <a href="{% url 'account_login' %}">log in</a> if you are a returning user.</p>
 
 {% endblock %}

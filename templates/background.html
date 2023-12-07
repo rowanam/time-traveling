@@ -3,8 +3,14 @@
 {% block content %}
 
 <div class="bg-img-container">
-    {% block box %}
-    {% endblock box %}
+    <div class="page-wrapper">
+        <div class="card text-center rounded-0 content-box welcome-card">
+            <div class="card-body">
+                {% block box %}
+                {% endblock box %}
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
