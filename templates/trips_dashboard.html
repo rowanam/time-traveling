@@ -24,6 +24,9 @@
                                 <a href="{% url 'view_custom_trip' trip.id %}">
                                     <h2 class="card-title">{{ trip.title }}</h2>
                                 </a>
+                                {% if trip.start_date and trip.end_date %}
+                                <p class="dashboard-trip-dates">{{ trip.start_date }} - {{ trip.end_date }}</p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

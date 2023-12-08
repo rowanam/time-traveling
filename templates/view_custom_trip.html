@@ -10,10 +10,17 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container trip-detail-container">
     <div class="row">
-        <div class="col-6">
+        <div class="col">
             <h1>{{ trip.title }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            {% if trip.start_date and trip.end_date %}
+            <p class="trip-detail-dates">{{ trip.start_date }} - {{ trip.end_date }}</p>
+            {% endif %}
 
             <ul class="trip-timeline">
                 {% for location in locations %}
@@ -21,7 +28,7 @@
                 {% endfor %}
             </ul>
         </div>
-        <div class="col-6">
+        <div class="col-8">
             <div class="trip-map" id="map"></div>
         </div>
     </div>
