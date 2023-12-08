@@ -46,9 +46,17 @@ h1 {
     background-color: #b7431f;
 }
 
+.btn-delete-cancel {
+    color: #b7431f;
+}
+
 .btn-delete,
 .btn-delete:hover {
     border-color: #b7431f;
+}
+
+.btn-delete-cancel:hover {
+    color: #FFF;
 }
 
 /* HEADER AND FOOTER */

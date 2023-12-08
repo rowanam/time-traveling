@@ -32,7 +32,28 @@
                             <div class="collapse trip-card-controls">
                                 <a class="edit-icon-btn trip-card-btn" href="#" role="button"><i
                                         class="fa-solid fa-pencil"></i></a>
-                                <button class="delete-icon-btn trip-card-btn" type="button"><i class="fa-solid fa-trash"></i></button>
+                                <button class="delete-icon-btn trip-card-btn" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#modal-{{ trip.id }}"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Confirm deletion modal -->
+                <div class="modal" id="modal-{{ trip.id }}" aria-label="Confirm Trip Deletion" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title">Confirm Deletion</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to delete "{{ trip.title }}"? This action cannot be undone.</p>
+                                <div class="text-end">
+                                    <button type="button" class="btn btn-basic btn-delete-cancel" data-bs-dismiss="modal">Cancel</button>
+                                    <a class="btn btn-basic btn-delete" href="#" role="button">Delete</a>
+                                </div>
                             </div>
                         </div>
                     </div>
