@@ -51,8 +51,10 @@
                             <div class="modal-body">
                                 <p>Are you sure you want to delete "{{ trip.title }}"? This action cannot be undone.</p>
                                 <div class="text-end">
-                                    <button type="button" class="btn btn-basic btn-delete-cancel" data-bs-dismiss="modal">Cancel</button>
-                                    <a class="btn btn-basic btn-delete" href="#" role="button">Delete</a>
+                                    <button type="button" class="btn btn-basic btn-delete-cancel"
+                                        data-bs-dismiss="modal">Cancel</button>
+                                    <a class="btn btn-basic btn-delete" href="{% url 'delete_trip' trip.id %}"
+                                        role="button">Delete</a>
                                 </div>
                             </div>
                         </div>

@@ -96,3 +96,13 @@ class AddCustomLocations(View):
             print("Error")
 
         return HttpResponseRedirect(reverse("trips_dashboard"))
+
+
+class DeleteTrip(View):
+    """A class-based view for deleting a trip."""
+    def get(self, request, trip_id):
+        user = request.user
+        user_trips_queryset = CustomTrip.objects.filter(user=user)
+        trip = get_object_or_404(user_trips_queryset, id=trip_id)
+        trip.delete()
+        return HttpResponseRedirect(reverse("trips_dashboard"))
