@@ -8,7 +8,9 @@
             <h1>Trips Dashboard</h1>
         </div>
         <div class="col-3 button-right-col">
-            <a class="btn btn-basic" href="{% url 'add_custom_trip' %}" role="button">Add a trip</a>
+            <a class="btn btn-basic btn-general" href="{% url 'add_custom_trip' %}" role="button">Add a trip</a>
+            <button class="btn btn-basic btn-edit" type="button" data-bs-toggle="collapse"
+                data-bs-target=".trip-card-controls" aria-expanded="false">Edit trips</button>
         </div>
     </div>
 
@@ -18,23 +20,28 @@
         <div class="col-12 mt-3 left">
             <div class="row">
                 {% for trip in trips %}
-                    <div class="col-md-4">
-                        <div class="card mb-4 trip-card rounded-0">
-                            <div class="card-body">
-                                <a href="{% url 'view_custom_trip' trip.id %}">
-                                    <h2 class="card-title">{{ trip.title }}</h2>
-                                </a>
-                                {% if trip.start_date and trip.end_date %}
-                                <p class="dashboard-trip-dates">{{ trip.start_date }} - {{ trip.end_date }}</p>
-                                {% endif %}
+                <div class="col-md-4">
+                    <div class="card mb-4 trip-card rounded-0">
+                        <div class="card-body">
+                            <a href="{% url 'view_custom_trip' trip.id %}">
+                                <h2 class="card-title">{{ trip.title }}</h2>
+                            </a>
+                            {% if trip.start_date and trip.end_date %}
+                            <p class="dashboard-trip-dates">{{ trip.start_date }} - {{ trip.end_date }}</p>
+                            {% endif %}
+                            <div class="collapse trip-card-controls">
+                                <a class="edit-icon-btn trip-card-btn" href="#" role="button"><i
+                                        class="fa-solid fa-pencil"></i></a>
+                                <button class="delete-icon-btn trip-card-btn" type="button"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    {% if forloop.counter|divisibleby:3 %}
-                        </div>
-                        <div class="row">
-                    {% endif %}
+                {% if forloop.counter|divisibleby:3 %}
+            </div>
+            <div class="row">
+                {% endif %}
 
                 {% endfor %}
             </div>
