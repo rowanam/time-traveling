@@ -180,7 +180,7 @@ footer {
 }
 
 .delete-icon-btn {
-    background-color: #181818;
+    background-color: transparent;
     color: #b7431f;
     border: none;
     padding: 0;
@@ -213,6 +213,7 @@ footer {
 
 .trip-detail-container h1 {
     margin-bottom: 1.1rem;
+    display: inline-block;
 }
 
 .trip-detail-dates {
