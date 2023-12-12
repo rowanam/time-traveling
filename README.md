@@ -34,9 +34,9 @@ Front-end controls:
 
 - [bootstrap-datepicker](https://github.com/uxsolutions/bootstrap-datepicker)
 
-Map interaction:
+Map search and autocomplete:
 
-- [leaflet-geosearch](https://github.com/smeijer/leaflet-geosearch)
+- [Leaflet.Autocomplete](https://github.com/tomickigrzegorz/Leaflet.Autocomplete)
 
 Deployment server:
 
