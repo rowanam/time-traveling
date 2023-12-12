@@ -32,7 +32,8 @@ Authentication:
 
 Front-end controls:
 
-- [bootstrap-datepicker](https://github.com/uxsolutions/bootstrap-datepicker)
+- Datepicker - [bootstrap-datepicker](https://github.com/uxsolutions/bootstrap-datepicker)
+- Sortable list - [jQuery UI](https://jqueryui.com/)
 
 Map search and autocomplete:
 

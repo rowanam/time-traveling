@@ -9,6 +9,9 @@
 <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/gh/tomickigrzegorz/autocomplete@1.8.3/dist/css/autocomplete.min.css">
 
+<!-- jQuery UI -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
 {% endblock %}
 
 
@@ -34,9 +37,9 @@
                 </p>
                 <ul id="locations-list">
                     {% for form in formset.forms %}
-                    <div class="location-form">
-                        {{ form.as_p }}
-                    </div>
+                        <li class="location-form">
+                            {{ form.as_p }}
+                        </li>
                     {% endfor %}
                 </ul>
                 <div>
@@ -73,6 +76,9 @@
 
 <!-- Leaflet.Autocomplete -->
 <script src="https://cdn.jsdelivr.net/gh/tomickigrzegorz/autocomplete@1.8.3/dist/js/autocomplete.min.js"></script>
+
+<!-- jQuery UI -->
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
 <script type="module" src="{% static 'js/map_sizing.js' %}"></script>
 <script type="module" src="{% static 'js/add_custom_locations.js' %}"></script>

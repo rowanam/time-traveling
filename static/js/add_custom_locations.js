@@ -120,8 +120,8 @@ $(document).ready(function () {
             currentLocationObject = object;
             currentCoordinates = [lat, lng];
 
-            // update polyline, adding selected city temporarily
-            updatePolyline(currentCoordinates, true);
+            // update coordinates array and polyline, adding selected city temporarily
+            addCoordinates(currentCoordinates, true);
 
             // update map view
             if (polyline) {
@@ -147,8 +147,9 @@ $(document).ready(function () {
         // get current total number of forms, which will be the next form index
         let formIndex = $("#id_form-TOTAL_FORMS").val();
 
-        // add a new form - html content of empty-form with correct index added to id and name attributes
-        $("#locations-list").append($("#empty-form").html().replace(/__prefix__/g, formIndex));
+        // add a new form to list - html content of empty-form with correct index added to id and name attributes
+        let formCopy = $("#empty-form").html().replace(/__prefix__/g, formIndex);
+        $("#locations-list").append(`<li class="location-form">${formCopy}</li>`);
 
         // get results from map search and store location name and coordinate data
         let locationName = resultObject.properties.name;
@@ -166,15 +167,41 @@ $(document).ready(function () {
     }
 
     /**
-     * Add coordinates from the current location to the coordinates sequence and
-     * and update the polyline on the map
-     * @param {array} coordinates - array of lat, lng coordinates
-     * @param {boolean} temp - whether the coordinates should be added temporarily
+     * Add coordinates from the current location to the coordinates sequence
+     * @param {array} coordinates - an array containing a lat and a long coordinate
+     * @param {boolean} temp - whether the new coordinates should be added temporarily
      */
-    function updatePolyline(coordinates, temp) {
+    function addCoordinates(coordinates, temp) {
         // add new coordinates to array
         coordinatesArray.push(coordinates);
 
+        updatePolyline();
+
+        // if coordinates added temporarliy, remove them.
+        // this is done if a city is selected from the list to view,
+        // but not yet added to the trip
+        if (temp) {
+            coordinatesArray.pop();
+        }
+    }
+
+    /**
+     * Move a pair of coordinates in coordinatesArray to a new position
+     * @param {number} oldIndex - original index of coordinates
+     * @param {number} newIndex - new index of coordinates 
+     */
+    function moveCoordinates(oldIndex, newIndex) {
+        // move coordinates from old to new position
+        let movedCoordinates = coordinatesArray.splice(oldIndex, 1)[0];
+        coordinatesArray.splice(newIndex, 0, movedCoordinates);
+
+        updatePolyline();
+    }
+
+    /**
+     * Update the polyline on the map
+     */
+    function updatePolyline() {
         // only display polylines if there are at least 2 points
         if (coordinatesArray.length >= 2) {
             // remove any existing polyline
@@ -187,13 +214,6 @@ $(document).ready(function () {
                 color: 'orange',
                 weight: 2,
             }).addTo(map);
-
-            // if coordinates added temporarliy, remove them.
-            // this is done if a city is selected from the list to view,
-            // but not yet added to the trip
-            if (temp) {
-                coordinatesArray.pop();
-            }
         }
     }
 
@@ -211,7 +231,28 @@ $(document).ready(function () {
             currentLocationObject = null;
             auto.destroy();
 
-            updatePolyline(currentCoordinates, false);
+            addCoordinates(currentCoordinates, false);
+        }
+    });
+
+    // make locations list sortable
+    $("#locations-list").sortable({
+        update: function (event, ui) {
+            let originalOrder = $("> p > input[id$='-order']", ui.item).attr("value");
+
+            // start locations ordering at 1
+            let order = 1;
+
+            // when user changes order, update "order" in each location form
+            $("#locations-list > li").each(function () {
+                $("> p > input[id$='-order']", this).attr("value", order);
+                order++;
+            });
+
+            let newOrder = $("> p > input[id$='-order']", ui.item).attr("value");
+
+            // update coordinates sequence and polyline on map
+            moveCoordinates(originalOrder - 1, newOrder - 1);
         }
     });
 });
