@@ -151,6 +151,35 @@ $(document).ready(function () {
         let formCopy = $("#empty-form").html().replace(/__prefix__/g, formIndex);
         $("#locations-list").append(`<li class="location-form">${formCopy}</li>`);
 
+        // change display of list item, label and icon
+        let nameInput = $(`#id_form-${formIndex}-name`);
+        nameInput.prev("label").hide();
+        nameInput.before("<span class='pin-icon'><i class='fa-solid fa-map-pin'></i></span>");
+        nameInput.after(`
+            <div class="dropdown location-dropdown ms-auto">
+                <i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                <ul class="dropdown-menu">
+                    <li>
+                        <span class="dropdown-item">
+                        <i class="fa-solid fa-pen mx-2"></i> Edit name
+                        </span>
+                    </li>
+                    <li>
+                        <span class="dropdown-item">
+                        <i class="fa-solid fa-arrow-rotate-right mx-2"></i> Change location
+                        </span>
+                    </li>
+                    <li>
+                        <span class="dropdown-item">
+                            <i class="fa-solid fa-trash mx-2"></i> Delete
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        `);
+        nameInput.prop("disabled", "true");
+        nameInput.attr("class", "location-hidden-display");
+
         // get results from map search and store location name and coordinate data
         let locationName = resultObject.properties.name;
         let lat = resultObject.geometry.coordinates[1];

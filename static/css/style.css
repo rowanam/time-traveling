@@ -226,6 +226,46 @@ footer {
     background-image: linear-gradient(to bottom,#3d9970,#276348);
 }
 
+#locations-list {
+    padding-left: 1rem;
+}
+
+#locations-list li {
+    list-style-type: none;
+}
+
+.pin-icon {
+    margin-right: 1rem;
+}
+
+.pin-icon i:hover {
+    color: #34825f;
+    transform: scale(1.3);
+    cursor: pointer;
+}
+
+.location-dropdown {
+    display: inline-block;
+}
+
+.location-dropdown i {
+    margin-left: .7rem;
+}
+
+.location-dropdown i:hover {
+    color: #34825f;
+    cursor: pointer;
+}
+
+.dropdown-item:hover {
+    cursor: pointer;
+}
+
+.location-hidden-display {
+    color: #FFF;
+    border: none;
+}
+
 /* TRIP DETAIL */
 
 .trip-detail-container h1 {
@@ -271,10 +311,4 @@ footer {
 
 .full-map {
     height: 80vh;
-}
-
-/* FORMS */
-
-#locations-list li {
-    list-style-type: none;
 }
