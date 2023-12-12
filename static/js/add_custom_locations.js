@@ -1,10 +1,18 @@
-import { setMapHeight } from './map_sizing.js';
+import {
+    setMapHeight
+} from './map_sizing.js';
 
 $(document).ready(function () {
     // size map on page load and window resizing
     setMapHeight();
     $(window).resize(setMapHeight);
-    
+
+    // INITIALIZE VARIABLES
+    let currentLocationObject = null;
+    let currentCoordinates = [];
+    let coordinatesArray = [];
+    let polyline;
+
     // DISPLAY MAP
     // initialize Leaflet
     var map = L.map('map').setView({
@@ -23,9 +31,6 @@ $(document).ready(function () {
         imperial: true,
         metric: true
     }).addTo(map);
-
-    // INITIALIZE CURRENT LOCATION RESULT VARIABLE
-    let currentLocationObject = null;
 
     // ADD AUTOCOMPLETE SEARCH BAR
     const auto = new Autocomplete("search", {
@@ -97,25 +102,33 @@ $(document).ready(function () {
                 }
             });
 
-            // display result on map
             const {
                 display_name
             } = object.properties;
             const [lng, lat] = object.geometry.coordinates;
 
+            // display result on map
             const marker = L.marker([lat, lng], {
                 title: display_name,
             });
-
             marker.addTo(map).bindPopup(display_name);
-
-            map.setView([lat, lng], 8);
 
             // display "Add" button
             $("#add-location").show();
 
-            // store current location result
+            // store current location result and coordinates
             currentLocationObject = object;
+            currentCoordinates = [lat, lng];
+
+            // update polyline, adding selected city temporarily
+            updatePolyline(currentCoordinates, true);
+
+            // update map view
+            if (polyline) {
+                map.fitBounds(polyline.getBounds());
+            } else {
+                map.setView([lat, lng], 8);
+            }
         },
 
         // the method presents no results element
@@ -126,7 +139,10 @@ $(document).ready(function () {
             template(`<li>No results found: "${currentValue}"</li>`),
     });
 
-    // add a new form to page with data from the search result
+    /**
+     * Add a new form to the locations formset with data from the search result
+     * @param {object} resultObject - object containing geographical results data
+     */
     function addLocationForm(resultObject) {
         // get current total number of forms, which will be the next form index
         let formIndex = $("#id_form-TOTAL_FORMS").val();
@@ -149,10 +165,42 @@ $(document).ready(function () {
         $("#id_form-TOTAL_FORMS").val(parseInt(formIndex) + 1);
     }
 
+    /**
+     * Add coordinates from the current location to the coordinates sequence and
+     * and update the polyline on the map
+     * @param {array} coordinates - array of lat, lng coordinates
+     * @param {boolean} temp - whether the coordinates should be added temporarily
+     */
+    function updatePolyline(coordinates, temp) {
+        // add new coordinates to array
+        coordinatesArray.push(coordinates);
+
+        // only display polylines if there are at least 2 points
+        if (coordinatesArray.length >= 2) {
+            // remove any existing polyline
+            if (polyline) {
+                polyline.remove();
+            }
+
+            // create and display a polyline from the coordinates array
+            polyline = L.polyline(coordinatesArray, {
+                color: 'orange',
+                weight: 2,
+            }).addTo(map);
+
+            // if coordinates added temporarliy, remove them.
+            // this is done if a city is selected from the list to view,
+            // but not yet added to the trip
+            if (temp) {
+                coordinatesArray.pop();
+            }
+        }
+    }
+
     // create new location form on "Add" button click
     $("#add-location").click(function () {
         // check there is a location currently saved
-        if (currentLocationObject != null){
+        if (currentLocationObject != null) {
             $("#locations-instructions").hide();
             $("#add-location").hide();
 
@@ -162,6 +210,8 @@ $(document).ready(function () {
             // clear currentLocationObject variable and map search bar
             currentLocationObject = null;
             auto.destroy();
+
+            updatePolyline(currentCoordinates, false);
         }
     });
 });
