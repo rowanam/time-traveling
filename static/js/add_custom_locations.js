@@ -177,7 +177,6 @@ $(document).ready(function () {
                 </ul>
             </div>
         `);
-        nameInput.prop("disabled", "true");
         nameInput.attr("class", "location-hidden-display");
 
         // get results from map search and store location name and coordinate data
