@@ -19,7 +19,10 @@ class CustomTripForm(forms.ModelForm):
 
     class Meta:
         model = CustomTrip
-        fields = ["title", "start_date", "end_date"]
+        fields = ["title", "start_date", "end_date", "note", "cover_image"]
+        labels = {
+            "title": _("Title*"),
+        }
 
 
 class CustomLocationsForm(forms.ModelForm):

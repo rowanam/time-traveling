@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from cloudinary.models import CloudinaryField
 
 
 class CustomTrip(models.Model):
@@ -13,6 +14,8 @@ class CustomTrip(models.Model):
     )
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
+    note = models.TextField(blank=True, null=True)
+    cover_image = CloudinaryField("image", blank=True, null=True)
 
     def __str__(self):
         """Return string representation of object"""

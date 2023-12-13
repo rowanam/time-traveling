@@ -146,6 +146,21 @@ footer {
     border: none;
 }
 
+.dashboard-cover-image-wrapper {
+    width: 100%;
+    height: 25vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(to bottom right, #1f503a, #725320);
+}
+
+.dashboard-cover-image {
+    width: 100%;
+    object-fit: cover;
+}
+
 .trip-card .card-body a {
     text-decoration: none;
 }

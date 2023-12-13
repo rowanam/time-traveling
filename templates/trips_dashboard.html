@@ -20,8 +20,16 @@
         <div class="col-12 mt-3 left">
             <div class="row">
                 {% for trip in trips %}
-                <div class="col-md-4">
+                <div class="col-md-6 col-xxl-4">
                     <div class="card mb-4 trip-card rounded-0">
+                        <a href="{% url 'view_custom_trip' trip.id %}">
+                            <div class="dashboard-cover-image-wrapper">
+                                {% if trip.cover_image.url %}
+                                <img src="{{ trip.cover_image.url }}" class="dashboard-cover-image"
+                                    alt="Trip cover image">
+                                {% endif %}
+                            </div>
+                        </a>
                         <div class="card-body">
                             <a href="{% url 'view_custom_trip' trip.id %}">
                                 <h2 class="card-title">{{ trip.title }}</h2>
