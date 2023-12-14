@@ -160,17 +160,7 @@ $(document).ready(function () {
                 <i class="fa-solid fa-ellipsis-vertical" data-bs-toggle="dropdown" aria-expanded="false"></i>
                 <ul class="dropdown-menu">
                     <li>
-                        <span class="dropdown-item">
-                        <i class="fa-solid fa-pen mx-2"></i> Edit name
-                        </span>
-                    </li>
-                    <li>
-                        <span class="dropdown-item">
-                        <i class="fa-solid fa-arrow-rotate-right mx-2"></i> Change location
-                        </span>
-                    </li>
-                    <li>
-                        <span class="dropdown-item">
+                        <span class="dropdown-item delete-location-control">
                             <i class="fa-solid fa-trash mx-2"></i> Delete
                         </span>
                     </li>
@@ -281,6 +271,17 @@ $(document).ready(function () {
 
             // update coordinates sequence and polyline on map
             moveCoordinates(originalOrder - 1, newOrder - 1);
+        }
+    });
+
+    $("#locations-list").click(function(e) {
+        if (e.target && e.target.matches("span.delete-location-control")) {
+            console.log("clicked");
+            // console.log(this);
+            // console.log(e.target);
+            // let liParent = $(e.target).parents("li.location-form")[0];
+            // console.log(liParent);
+            // liParent.remove();
         }
     });
 });

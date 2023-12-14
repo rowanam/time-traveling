@@ -1,12 +1,12 @@
 from django.contrib import admin
-from .models import CustomTrip, CustomLocation
+from .models import Trip, Location
 
-class CustomLocationInlineAdmin(admin.StackedInline):
-    model = CustomLocation
+class LocationInlineAdmin(admin.StackedInline):
+    model = Location
     extra = 0
 
-class CustomTripAdmin(admin.ModelAdmin):
-    model = CustomTrip
-    inlines = [CustomLocationInlineAdmin]
+class TripAdmin(admin.ModelAdmin):
+    model = Trip
+    inlines = [LocationInlineAdmin]
 
-admin.site.register(CustomTrip, CustomTripAdmin)
+admin.site.register(Trip, TripAdmin)

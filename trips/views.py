@@ -3,8 +3,8 @@ from django.views import View
 from django.http import HttpResponseRedirect
 from django.forms import formset_factory
 from extra_views import InlineFormSetView
-from .forms import CustomTripForm, CustomLocationsForm
-from .models import CustomTrip, CustomLocation
+from .forms import TripForm, LocationForm
+from .models import Trip, Location
 
 
 class Welcome(View):
@@ -19,7 +19,7 @@ class TripList(View):
 
     def get(self, request):
         user = request.user
-        trips = CustomTrip.objects.filter(user=user)
+        trips = Trip.objects.filter(user=user)
         context = {"trips": trips}
         return render(request, "trips_dashboard.html", context)
 
@@ -29,9 +29,9 @@ class TripDetail(View):
 
     def get(self, request, trip_id):
         user = request.user
-        user_trips_queryset = CustomTrip.objects.filter(user=user)
+        user_trips_queryset = Trip.objects.filter(user=user)
         trip = get_object_or_404(user_trips_queryset, id=trip_id)
-        trip_locations = CustomLocation.objects.filter(trip=trip).order_by("order")
+        trip_locations = Location.objects.filter(trip=trip).order_by("order")
 
         coordinates_seq = [[location.lat, location.long] for location in trip_locations]
 
@@ -40,21 +40,21 @@ class TripDetail(View):
             "locations": trip_locations,
             "coordinates": coordinates_seq,
         }
-        return render(request, "view_custom_trip.html", context)
+        return render(request, "view_trip.html", context)
 
 
-class AddCustomTrip(View):
-    """A class-based view for adding a new custom trip."""
+class AddTrip(View):
+    """A class-based view for adding a new trip."""
 
     def get(self, request):
         """Render the add trip template"""
-        form = CustomTripForm()
+        form = TripForm()
         context = {"form": form}
-        return render(request, "add_custom_trip.html", context)
+        return render(request, "add_trip.html", context)
 
     def post(self, request):
         """Post the completed add trip form"""
-        form = CustomTripForm(data=request.POST)
+        form = TripForm(data=request.POST)
 
         if form.is_valid():
             new_trip = form.save(commit=False)
@@ -63,31 +63,31 @@ class AddCustomTrip(View):
             trip_id = new_trip.id
             return HttpResponseRedirect(reverse("locations", args=[trip_id]))
         else:
-            return render(request, "add_custom_trip.html", {"form": form})
+            return render(request, "add_trip.html", {"form": form})
 
 
-class AddCustomLocations(View):
-    """A class-based view for adding locations to a custom trip."""
+class AddLocations(View):
+    """A class-based view for adding locations to a trip."""
 
     def get(self, request, trip_id):
         user = request.user
-        user_trips_queryset = CustomTrip.objects.filter(user=user)
+        user_trips_queryset = Trip.objects.filter(user=user)
         trip = get_object_or_404(user_trips_queryset, id=trip_id)
 
-        CustomLocationsFormSet = formset_factory(CustomLocationsForm, extra=0)
-        formset = CustomLocationsFormSet()
+        LocationsFormSet = formset_factory(LocationForm, extra=0)
+        formset = LocationsFormSet()
 
         context = {"trip": trip, "formset": formset}
 
-        return render(request, "add_custom_locations.html", context)
+        return render(request, "add_locations.html", context)
 
     def post(self, request, trip_id):
         user = request.user
-        user_trips_queryset = CustomTrip.objects.filter(user=user)
+        user_trips_queryset = Trip.objects.filter(user=user)
         trip = get_object_or_404(user_trips_queryset, id=trip_id)
 
-        CustomLocationsFormSet = formset_factory(CustomLocationsForm)
-        formset = CustomLocationsFormSet(data=request.POST)
+        LocationsFormSet = formset_factory(LocationForm)
+        formset = LocationsFormSet(data=request.POST)
 
         if formset.is_valid():
             for form in formset:
@@ -98,13 +98,13 @@ class AddCustomLocations(View):
         else:
             print("Error")
             context = {"trip": trip, "formset": formset}
-            return render(request, "add_custom_locations.html", context)
+            return render(request, "add_locations.html", context)
 
 
 class UpdateLocations(InlineFormSetView):
-    model = CustomTrip
-    inline_model = CustomLocation
-    form_class = CustomLocationsForm
+    model = Trip
+    inline_model = Location
+    form_class = LocationForm
     factory_kwargs = {"extra": 0}
     template_name = "update_locations.html"
 
@@ -113,7 +113,7 @@ class DeleteTrip(View):
     """A class-based view for deleting a trip."""
     def get(self, request, trip_id):
         user = request.user
-        user_trips_queryset = CustomTrip.objects.filter(user=user)
+        user_trips_queryset = Trip.objects.filter(user=user)
         trip = get_object_or_404(user_trips_queryset, id=trip_id)
         trip.delete()
         return HttpResponseRedirect(reverse("trips_dashboard"))

@@ -3,14 +3,12 @@ from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 
 
-class CustomTrip(models.Model):
-    """A class-based model for custom trips created by a user.
-    A custom trip is one where the structure of the locations is not enforced -
-    any type of location can be entered."""
+class Trip(models.Model):
+    """A class-based model for a trip created by a user."""
 
     title = models.CharField(max_length=70)
     user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="user_custom_trips"
+        User, on_delete=models.CASCADE, related_name="user_trips"
     )
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
@@ -19,14 +17,18 @@ class CustomTrip(models.Model):
 
     def __str__(self):
         """Return string representation of object"""
-        return self.title
+        return f"{self.title}"
 
 
-class CustomLocation(models.Model):
-    """A class-based model for locations in a custom trip."""
+class Location(models.Model):
+    """A class-based model for a location in a trip."""
 
     name = models.CharField(max_length=50)
-    trip = models.ForeignKey(CustomTrip, on_delete=models.CASCADE, related_name="locations")
+    trip = models.ForeignKey(Trip, on_delete=models.CASCADE, related_name="locations")
     lat = models.FloatField()
     long = models.FloatField()
     order = models.IntegerField()
+
+    def __str__(self):
+        """Return string representation of object"""
+        return f"{self.name}"

@@ -1,10 +1,10 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from .models import CustomTrip, CustomLocation
+from .models import Trip, Location
 
 
-class CustomTripForm(forms.ModelForm):
-    """A form for creating new custom trips."""
+class TripForm(forms.ModelForm):
+    """A form for creating a new trip."""
 
     start_date = forms.DateField(
         widget=forms.DateInput(format="%b %-d, %Y", attrs={"class": "datepicker"}),
@@ -18,22 +18,22 @@ class CustomTripForm(forms.ModelForm):
     )
 
     class Meta:
-        model = CustomTrip
+        model = Trip
         fields = ["title", "start_date", "end_date", "note", "cover_image"]
         labels = {
             "title": _("Title*"),
         }
 
 
-class CustomLocationsForm(forms.ModelForm):
-    """A form for adding locations to custom trips."""
+class LocationForm(forms.ModelForm):
+    """A form for creating a new location in a trip."""
 
     lat = forms.DecimalField(widget=forms.HiddenInput())
     long = forms.DecimalField(widget=forms.HiddenInput())
     order = forms.IntegerField(widget=forms.HiddenInput())
 
     class Meta:
-        model = CustomLocation
+        model = Location
         fields = ["name", "lat", "long", "order"]
         labels = {
             "name": _("Location name"),
