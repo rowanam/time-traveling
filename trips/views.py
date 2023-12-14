@@ -2,6 +2,7 @@ from django.shortcuts import render, reverse, get_object_or_404
 from django.views import View
 from django.http import HttpResponseRedirect
 from django.forms import formset_factory
+from extra_views import InlineFormSetView
 from .forms import CustomTripForm, CustomLocationsForm
 from .models import CustomTrip, CustomLocation
 
@@ -60,7 +61,7 @@ class AddCustomTrip(View):
             new_trip.user = request.user
             new_trip.save()
             trip_id = new_trip.id
-            return HttpResponseRedirect(reverse("add_custom_locations", args=[trip_id]))
+            return HttpResponseRedirect(reverse("locations", args=[trip_id]))
         else:
             return render(request, "add_custom_trip.html", {"form": form})
 
@@ -87,15 +88,25 @@ class AddCustomLocations(View):
 
         CustomLocationsFormSet = formset_factory(CustomLocationsForm)
         formset = CustomLocationsFormSet(data=request.POST)
+
         if formset.is_valid():
             for form in formset:
                 new_location = form.save(commit=False)
                 new_location.trip = trip
                 new_location.save()
+            return HttpResponseRedirect(reverse("trips_dashboard"))
         else:
             print("Error")
+            context = {"trip": trip, "formset": formset}
+            return render(request, "add_custom_locations.html", context)
 
-        return HttpResponseRedirect(reverse("trips_dashboard"))
+
+class UpdateLocations(InlineFormSetView):
+    model = CustomTrip
+    inline_model = CustomLocation
+    form_class = CustomLocationsForm
+    factory_kwargs = {"extra": 0}
+    template_name = "update_locations.html"
 
 
 class DeleteTrip(View):

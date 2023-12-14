@@ -8,5 +8,6 @@ urlpatterns = [
     path("add-custom-trip/", views.AddCustomTrip.as_view(), name="add_custom_trip"),
     path("trip/<int:trip_id>", views.TripDetail.as_view(), name="view_custom_trip"),
     path("add-custom-locations/<int:trip_id>", views.AddCustomLocations.as_view(), name="add_custom_locations"),
+    path("locations/<int:pk>", views.UpdateLocations.as_view(), name="locations"),
     path("delete-trip/<int:trip_id>", views.DeleteTrip.as_view(), name="delete_trip"),
 ]

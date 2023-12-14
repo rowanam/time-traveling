@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<div class="container">
+    <h1>New Trip</h1>
+
+    <form method="POST" autocomplete="off">
+        {% csrf_token %}
+        {{ formset|crispy }}
+        <div>
+            <p>
+                <button type="submit">Save Locations</button>
+            </p>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
