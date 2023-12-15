@@ -14,7 +14,8 @@
     <div class="row">
         <div class="col">
             <h1>{{ trip.title }}</h1>
-            <a class="edit-icon-btn trip-card-btn" href="#" role="button"><i class="fa-solid fa-pencil"></i></a>
+            <a class="edit-icon-btn trip-card-btn" href="{% url 'edit_trip' trip.id %}" role="button"><i
+                    class="fa-solid fa-pencil"></i></a>
             <button class="delete-icon-btn trip-card-btn" type="button" data-bs-toggle="modal"
                 data-bs-target="#modal"><i class="fa-solid fa-trash"></i></button>
         </div>
@@ -43,16 +44,14 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title">Confirm Deletion</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p>Are you sure you want to delete "{{ trip.title }}"? This action cannot be undone.</p>
                 <div class="text-end">
                     <button type="button" class="btn btn-basic btn-delete-cancel"
                         data-bs-dismiss="modal">Cancel</button>
-                    <a class="btn btn-basic btn-delete" href="{% url 'delete_trip' trip.id %}"
-                        role="button">Delete</a>
+                    <a class="btn btn-basic btn-delete" href="{% url 'delete_trip' trip.id %}" role="button">Delete</a>
                 </div>
             </div>
         </div>

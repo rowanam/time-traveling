@@ -20,9 +20,6 @@ class TripForm(forms.ModelForm):
     class Meta:
         model = Trip
         fields = ["title", "start_date", "end_date", "note", "cover_image"]
-        labels = {
-            "title": _("Title*"),
-        }
 
 
 class LocationForm(forms.ModelForm):

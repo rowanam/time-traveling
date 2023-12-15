@@ -225,13 +225,6 @@ footer {
     color: #181818;
 }
 
-.datepicker {
-    padding: 2px 3px;
-    -webkit-border-radius: 2px;
-    border-radius: 2px;
-    border: 1px solid rgb(133, 133, 133);
-}
-
 .datepicker table tr td.day:hover,
 .datepicker tfoot tr th:hover {
     background: #3d9970;

@@ -1,5 +1,6 @@
 from django.shortcuts import render, reverse, get_object_or_404
 from django.views import View
+from django.views.generic.edit import UpdateView
 from django.http import HttpResponseRedirect
 from django.forms import formset_factory
 from extra_views import InlineFormSetView
@@ -66,6 +67,17 @@ class AddTrip(View):
             return render(request, "add_trip.html", {"form": form})
 
 
+class EditTrip(UpdateView):
+    """A class-based view for updating a trip."""
+
+    model = Trip
+    form_class = TripForm
+    template_name = "edit_trip.html"
+
+    def get_success_url(self):
+        return reverse("locations", args=[self.object.pk])
+
+
 class AddLocations(View):
     """A class-based view for adding locations to a trip."""
 
@@ -111,6 +123,7 @@ class UpdateLocations(InlineFormSetView):
 
 class DeleteTrip(View):
     """A class-based view for deleting a trip."""
+
     def get(self, request, trip_id):
         user = request.user
         user_trips_queryset = Trip.objects.filter(user=user)

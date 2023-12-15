@@ -13,15 +13,17 @@
 
 {% block content %}
 
+{% load crispy_forms_tags %}
+
 <div class="container">
-    <h1>New Trip</h1>
+    <h1>Edit Trip</h1>
 
     <form method="POST" autocomplete="off">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ form|crispy }}
         <div>
             <p>
-                <button type="submit">Create Trip</button>
+                <button class="btn btn-basic btn-general" type="submit">Save</button>
             </p>
         </div>
     </form>
