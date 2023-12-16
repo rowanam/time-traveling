@@ -234,6 +234,10 @@ footer {
     background-image: linear-gradient(to bottom,#3d9970,#276348);
 }
 
+#locations-instructions {
+    display: none;
+}
+
 #locations-list {
     padding-left: 1rem;
 }

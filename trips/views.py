@@ -4,7 +4,7 @@ from django.views.generic.edit import UpdateView
 from django.http import HttpResponseRedirect
 from django.forms import formset_factory
 from extra_views import InlineFormSetView
-from .forms import TripForm, LocationForm
+from .forms import TripForm, LocationForm, LocationInlineFormSet
 from .models import Trip, Location
 
 
@@ -114,11 +114,22 @@ class AddLocations(View):
 
 
 class UpdateLocations(InlineFormSetView):
+    """A class-based view for changing location records associated with a trip."""
+
     model = Trip
     inline_model = Location
     form_class = LocationForm
+    formset_class = LocationInlineFormSet
     factory_kwargs = {"extra": 0}
     template_name = "update_locations.html"
+
+    def get_context_data(self, **kwargs):
+        """Pass context data to the view. Used here to pass initial location cordinates."""
+        context = super().get_context_data(**kwargs)
+        trip_locations = Location.objects.filter(trip=self.object).order_by("order")
+        coordinates_seq = [[loc.lat, loc.long] for loc in trip_locations]
+        context["coordinates"] = coordinates_seq
+        return context
 
 
 class DeleteTrip(View):

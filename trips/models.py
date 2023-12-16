@@ -29,6 +29,9 @@ class Location(models.Model):
     long = models.FloatField()
     order = models.IntegerField()
 
+    class Meta:
+        ordering = ["order"]
+
     def __str__(self):
         """Return string representation of object"""
         return f"{self.name}"

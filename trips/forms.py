@@ -35,3 +35,13 @@ class LocationForm(forms.ModelForm):
         labels = {
             "name": _("Location name"),
         }
+        ordering = ("order",)
+
+
+class LocationInlineFormSet(forms.models.BaseInlineFormSet):
+    """Override the BaseInlineFormSet class to hide "delete" field in the location formset."""
+
+    def add_fields(self, form, index):
+        super().add_fields(form, index)
+        if "DELETE" in form.fields:
+            form.fields["DELETE"].widget = forms.HiddenInput()
