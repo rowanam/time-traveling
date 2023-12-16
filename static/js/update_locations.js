@@ -197,6 +197,30 @@ $(document).ready(function () {
             template(`<li>No results found: "${currentValue}"</li>`),
     });
 
+    // -------------------- MAP DISPLAY FUNCTIONS --------------------
+
+    /**
+     * Update polyline on the map
+     */
+    function updatePolyline() {
+        // only display polylines if there are at least 2 points
+        if (coordinatesArray.length >= 2) {
+            // remove any existing polyline
+            if (polyline) {
+                polyline.remove();
+            }
+
+            // create and display a polyline from the coordinates array
+            polyline = L.polyline(coordinatesArray, {
+                color: 'orange',
+                weight: 2,
+            }).addTo(map);
+
+            // update map view
+            map.fitBounds(polyline.getBounds());
+        }
+    }
+
     // -------------------- SET UP MAP DISPLAY --------------------
     // display the initial polyline (if there are locations)
     updatePolyline();
@@ -233,7 +257,18 @@ $(document).ready(function () {
         $("#id_locations-TOTAL_FORMS").val(parseInt(formIndex) + 1);
     }
 
-    // -------------------- MAP AND COORDINATES SEQUENCE FUNCTIONS --------------------
+    /**
+     * Reset "order" fields on all location forms, numbered starting from 1
+     */
+    function reorderLocations() {
+        let order = 1;
+        $("#locations-list > li").each(function () {
+            $("> p > input[id$='-order']", this).val(order);
+            order++;
+        });
+    }
+
+    // -------------------- COORDINATES SEQUENCE FUNCTIONS --------------------
 
     /**
      * Add coordinates from the current location to the coordinates sequence
@@ -268,25 +303,12 @@ $(document).ready(function () {
     }
 
     /**
-     * Update the polyline on the map
+     * Delete a pair of coordinates from coordinatesArray
+     * @param {number} index - index of the coordinates to be removed
      */
-    function updatePolyline() {
-        // only display polylines if there are at least 2 points
-        if (coordinatesArray.length >= 2) {
-            // remove any existing polyline
-            if (polyline) {
-                polyline.remove();
-            }
-
-            // create and display a polyline from the coordinates array
-            polyline = L.polyline(coordinatesArray, {
-                color: 'orange',
-                weight: 2,
-            }).addTo(map);
-
-            // update map view
-            map.fitBounds(polyline.getBounds());
-        }
+    function deleteCoordinates(index) {
+        coordinatesArray.splice(index, 1);
+        updatePolyline();
     }
 
     // -------------------- EVENT HANDLERS --------------------
@@ -314,33 +336,35 @@ $(document).ready(function () {
         // when user drops an item in a new position
         // reset all items' "order" fields and update polyline coordinates sequence
         update: function (event, ui) {
-            // store item original order in sequence
-            let originalOrder = $("> p > input[id$='-order']", ui.item).attr("value");
-
-            // start locations ordering at 1
-            let order = 1;
-            // when user changes order, update "order" in each location form
-            $("#locations-list > li").each(function () {
-                $("> p > input[id$='-order']", this).attr("value", order);
-                order++;
-            });
-
-            // store item new order in sequence
-            let newOrder = $("> p > input[id$='-order']", ui.item).attr("value");
+            let originalOrder = $("> p > input[id$='-order']", ui.item).val();
+            reorderLocations();
+            let newOrder = $("> p > input[id$='-order']", ui.item).val();
 
             // update coordinates sequence and polyline on map
             moveCoordinates(originalOrder - 1, newOrder - 1);
         }
     });
 
+    // delete location on button click
+    // event listener added to list so listeners don't need to be
+    // created/removed for each location addition/deletion
     $("#locations-list").click(function (e) {
         if (e.target && e.target.matches("span.delete-location-control")) {
-            console.log("clicked");
-            // console.log(this);
-            // console.log(e.target);
-            // let liParent = $(e.target).parents("li.location-form")[0];
-            // console.log(liParent);
-            // liParent.remove();
+            // get the locations form li
+            let formLI = $(e.target).parents("li.location-form")[0];
+
+            let order = $("input[id$='-order']", formLI).val();
+            deleteCoordinates(order - 1);
+
+            // set the delete input field to "checked"
+            let deleteField = $(" input[id$='-DELETE']", formLI)[0];
+            $(deleteField).val("checked");
+
+            // move the form li into deleted-locations list to hide it
+            // moved into separate list so ordering isn't affected
+            $("#deleted-locations").append($(formLI));
+
+            reorderLocations();
         }
     });
 });

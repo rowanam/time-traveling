@@ -238,6 +238,10 @@ footer {
     display: none;
 }
 
+#deleted-locations {
+    display: none;
+}
+
 #locations-list {
     padding-left: 1rem;
 }
