@@ -2,7 +2,7 @@ from django.shortcuts import render, reverse, get_object_or_404
 from django.views import View
 from django.views.generic.edit import UpdateView
 from django.http import HttpResponseRedirect
-from django.forms import formset_factory
+from django.contrib.auth.mixins import LoginRequiredMixin
 from extra_views import InlineFormSetView
 from .forms import TripForm, LocationForm, LocationInlineFormSet
 from .models import Trip, Location
@@ -15,7 +15,7 @@ class Welcome(View):
         return render(request, "welcome.html")
 
 
-class TripList(View):
+class TripList(LoginRequiredMixin, View):
     """A class-based view for the trips dashboard page - home page for logged-in users."""
 
     def get(self, request):
@@ -25,7 +25,7 @@ class TripList(View):
         return render(request, "trips_dashboard.html", context)
 
 
-class TripDetail(View):
+class TripDetail(LoginRequiredMixin, View):
     """A class-based view to display details of a trip."""
 
     def get(self, request, trip_id):
@@ -44,7 +44,7 @@ class TripDetail(View):
         return render(request, "view_trip.html", context)
 
 
-class AddTrip(View):
+class AddTrip(LoginRequiredMixin, View):
     """A class-based view for adding a new trip."""
 
     def get(self, request):
@@ -67,18 +67,21 @@ class AddTrip(View):
             return render(request, "add_trip.html", {"form": form})
 
 
-class EditTrip(UpdateView):
+class EditTrip(LoginRequiredMixin, UpdateView):
     """A class-based view for updating a trip."""
 
     model = Trip
     form_class = TripForm
     template_name = "edit_trip.html"
 
+    def get_queryset(self):
+        return Trip.objects.filter(user=self.request.user)
+
     def get_success_url(self):
         return reverse("locations", args=[self.object.pk])
 
 
-class DeleteTrip(View):
+class DeleteTrip(LoginRequiredMixin, View):
     """A class-based view for deleting a trip."""
 
     def get(self, request, trip_id):
@@ -89,7 +92,7 @@ class DeleteTrip(View):
         return HttpResponseRedirect(reverse("trips_dashboard"))
 
 
-class UpdateLocations(InlineFormSetView):
+class UpdateLocations(LoginRequiredMixin, InlineFormSetView):
     """A class-based view for changing location records associated with a trip."""
 
     model = Trip
@@ -98,6 +101,9 @@ class UpdateLocations(InlineFormSetView):
     formset_class = LocationInlineFormSet
     factory_kwargs = {"extra": 0}
     template_name = "update_locations.html"
+
+    def get_queryset(self):
+        return Trip.objects.filter(user=self.request.user)
 
     def get_context_data(self, **kwargs):
         """Pass context data to the view. Used here to pass initial location cordinates."""
