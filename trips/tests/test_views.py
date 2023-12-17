@@ -17,7 +17,7 @@ class TestWelcomeView(TestCase):
 
 class TestTripListView(TestCase):
     @classmethod
-    def setUpTestData(self):
+    def setUpTestData(cls):
         test_user1 = User.objects.create_user(
             username="testuser1", password="Password*1"
         )
@@ -63,7 +63,7 @@ class TestTripListView(TestCase):
 
 class TestTripDetailView(TestCase):
     @classmethod
-    def setUpTestData(self):
+    def setUpTestData(cls):
         test_user1 = User.objects.create_user(
             username="testuser1", password="Password*1"
         )
@@ -113,3 +113,34 @@ class TestTripDetailView(TestCase):
 
         # check context contains 3 locations
         self.assertEqual(len(response.context["locations"]), 3)
+
+
+class TestAddTripView(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        User.objects.create_user(username="testuser1", password="Password*1")
+
+    def test_redirect_if_not_logged_in(self):
+        response = self.client.get("/add-trip/")
+        self.assertRedirects(response, "/accounts/login/?next=/add-trip/")
+
+    def test_get_add_trip_page_if_logged_in(self):
+        self.client.login(username="testuser1", password="Password*1")
+        response = self.client.get("/add-trip/")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "add_trip.html")
+
+    def test_logged_in_user_added_to_trip(self):
+        self.client.login(username="testuser1", password="Password*1")
+        response = self.client.post("/add-trip/", {"title": "Test Title"})
+
+        # get newly created trip object and check it has the logged-in user attached
+        trip = Trip.objects.get(id=1)
+        self.assertEqual(trip.user, response.wsgi_request.user)
+
+    def test_redirect_to_locations_on_success(self):
+        self.client.login(username="testuser1", password="Password*1")
+        response = self.client.post("/add-trip/", {"title": "Test Title"})
+
+        # check redirect to locations, url passed pk of newly created trip
+        self.assertRedirects(response, "/locations/1")
