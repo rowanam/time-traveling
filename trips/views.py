@@ -1,6 +1,6 @@
 from django.shortcuts import render, reverse, get_object_or_404
 from django.views import View
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from extra_views import InlineFormSetView
@@ -44,27 +44,21 @@ class TripDetail(LoginRequiredMixin, View):
         return render(request, "view_trip.html", context)
 
 
-class AddTrip(LoginRequiredMixin, View):
-    """A class-based view for adding a new trip."""
+class AddTrip(LoginRequiredMixin, CreateView):
+    """A class-based view for creating a trip."""
 
-    def get(self, request):
-        """Render the add trip template"""
-        form = TripForm()
-        context = {"form": form}
-        return render(request, "add_trip.html", context)
+    model = Trip
+    form_class = TripForm
+    template_name = "add_trip.html"
 
-    def post(self, request):
-        """Post the completed add trip form"""
-        form = TripForm(data=request.POST)
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        return HttpResponseRedirect(self.get_success_url())
 
-        if form.is_valid():
-            new_trip = form.save(commit=False)
-            new_trip.user = request.user
-            new_trip.save()
-            trip_id = new_trip.id
-            return HttpResponseRedirect(reverse("locations", args=[trip_id]))
-        else:
-            return render(request, "add_trip.html", {"form": form})
+    def get_success_url(self):
+        return reverse("locations", args=[self.object.pk])
 
 
 class EditTrip(LoginRequiredMixin, UpdateView):
