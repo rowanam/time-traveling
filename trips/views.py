@@ -78,39 +78,15 @@ class EditTrip(UpdateView):
         return reverse("locations", args=[self.object.pk])
 
 
-class AddLocations(View):
-    """A class-based view for adding locations to a trip."""
+class DeleteTrip(View):
+    """A class-based view for deleting a trip."""
 
     def get(self, request, trip_id):
         user = request.user
         user_trips_queryset = Trip.objects.filter(user=user)
         trip = get_object_or_404(user_trips_queryset, id=trip_id)
-
-        LocationsFormSet = formset_factory(LocationForm, extra=0)
-        formset = LocationsFormSet()
-
-        context = {"trip": trip, "formset": formset}
-
-        return render(request, "add_locations.html", context)
-
-    def post(self, request, trip_id):
-        user = request.user
-        user_trips_queryset = Trip.objects.filter(user=user)
-        trip = get_object_or_404(user_trips_queryset, id=trip_id)
-
-        LocationsFormSet = formset_factory(LocationForm)
-        formset = LocationsFormSet(data=request.POST)
-
-        if formset.is_valid():
-            for form in formset:
-                new_location = form.save(commit=False)
-                new_location.trip = trip
-                new_location.save()
-            return HttpResponseRedirect(reverse("trips_dashboard"))
-        else:
-            print("Error")
-            context = {"trip": trip, "formset": formset}
-            return render(request, "add_locations.html", context)
+        trip.delete()
+        return HttpResponseRedirect(reverse("trips_dashboard"))
 
 
 class UpdateLocations(InlineFormSetView):
@@ -130,14 +106,3 @@ class UpdateLocations(InlineFormSetView):
         coordinates_seq = [[loc.lat, loc.long] for loc in trip_locations]
         context["coordinates"] = coordinates_seq
         return context
-
-
-class DeleteTrip(View):
-    """A class-based view for deleting a trip."""
-
-    def get(self, request, trip_id):
-        user = request.user
-        user_trips_queryset = Trip.objects.filter(user=user)
-        trip = get_object_or_404(user_trips_queryset, id=trip_id)
-        trip.delete()
-        return HttpResponseRedirect(reverse("trips_dashboard"))
