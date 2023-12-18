@@ -201,3 +201,33 @@ class TestDeleteTripView(TestCase):
         self.client.login(username="testuser1", password="Password*1")
         response = self.client.get("/delete-trip/1")
         self.assertRedirects(response, "/dashboard/")
+
+
+class TestUpdateLocationsView(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        test_user1 = User.objects.create_user(
+            username="testuser1", password="Password*1"
+        )
+        User.objects.create_user(username="testuser2", password="Password*1")
+
+        Trip.objects.create(title="Test Title", user=test_user1)
+
+    def test_redirect_if_not_logged_in(self):
+        response = self.client.get("/locations/1")
+        self.assertRedirects(response, "/accounts/login/?next=/locations/1")
+
+    def test_404_response_if_trip_not_belong_to_logged_in_user(self):
+        self.client.login(username="testuser2", password="Password*1")
+        response = self.client.get("/locations/1")
+        self.assertEqual(response.status_code, 404)
+
+    def test_redirect_to_trip_page_on_success(self):
+        self.client.login(username="testuser1", password="Password*1")
+
+        # store a minimum valid form for successful formset submission
+        # management form fields
+        form_data = {"locations-TOTAL_FORMS": "0", "locations-INITIAL_FORMS": "0"}
+
+        response = self.client.post("/locations/1", form_data)
+        self.assertRedirects(response, "/trip/1")

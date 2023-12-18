@@ -106,3 +106,6 @@ class UpdateLocations(LoginRequiredMixin, InlineFormSetView):
         coordinates_seq = [[loc.lat, loc.long] for loc in trip_locations]
         context["coordinates"] = coordinates_seq
         return context
+
+    def get_success_url(self):
+        return reverse("view_trip", args=[self.object.pk])
