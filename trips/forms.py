@@ -24,6 +24,21 @@ class TripForm(forms.ModelForm):
             "note": forms.Textarea(attrs={"rows": 4}),
         }
 
+    def clean(self):
+        start_date = self.cleaned_data.get("start_date")
+        end_date = self.cleaned_data.get("end_date")
+
+        if start_date and not end_date:
+            msg = forms.ValidationError("End date is required if start date supplied.")
+            self.add_error("end_date", msg)
+        elif not start_date and end_date:
+            msg = forms.ValidationError("Start date is required if end date supplied.")
+            self.add_error("start_date", msg)
+        elif start_date and end_date:
+            if end_date < start_date:
+                msg = forms.ValidationError("End date must be after start date.")
+                self.add_error("end_date", msg)
+
 
 class LocationForm(forms.ModelForm):
     """A form for creating a new location in a trip."""

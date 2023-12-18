@@ -20,7 +20,7 @@ class TripList(LoginRequiredMixin, View):
 
     def get(self, request):
         user = request.user
-        trips = Trip.objects.filter(user=user)
+        trips = Trip.objects.filter(user=user).order_by("-start_date")
         context = {"trips": trips}
         return render(request, "trips_dashboard.html", context)
 
@@ -111,7 +111,7 @@ class UpdateLocations(LoginRequiredMixin, InlineFormSetView):
         return reverse("view_trip", args=[self.object.pk])
 
 
-class LifeMap(View):
+class LifeMap(LoginRequiredMixin, View):
     def get(self, request):
         user = request.user
         trips = Trip.objects.filter(user=user)
