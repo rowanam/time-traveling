@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-4">
+        <div class="col-md-4 order-2 order-md-1">
             {% if trip.start_date and trip.end_date %}
             <p class="trip-detail-dates">{{ trip.start_date }} - {{ trip.end_date }}</p>
             {% endif %}
@@ -36,7 +36,7 @@
                 {% endfor %}
             </ul>
         </div>
-        <div class="col-8">
+        <div class="col-md-8 order-md-2">
             <div class="trip-map" id="map"></div>
         </div>
     </div>

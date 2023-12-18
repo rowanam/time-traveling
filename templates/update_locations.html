@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-5">
+        <div class="col-md-5 order-2 order-md-1">
             <form id="locations-form" method="POST" autocomplete="off">
                 {% csrf_token %}
                 <h2>Locations</h2>
@@ -35,7 +35,7 @@
                     {{ formset.empty_form.as_p }}
                 </div>
                 <p id="locations-instructions">
-                    Search for locations on the map and select them to add to the trip.
+                    Search for locations on the map and select one to add it to the trip.
                 </p>
                 <ul id="locations-list">
                     {% for form in formset.forms %}
@@ -52,7 +52,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-sm-7">
+        <div class="col-md-7 order-md-2">
             <div class="locations-map-search">
                 <div class="auto-search-wrapper">
                     <input type="text" autocomplete="off" id="search" class="full-width"
