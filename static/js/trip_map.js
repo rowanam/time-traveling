@@ -1,16 +1,18 @@
-function setMapHeight() {
-    // set map aspect ratio to 3:2, based on width
-    $("#map").height($("#map").width() * 2 / 3);
-}
-
 $(document).ready(function () {
+    /**
+     * Set map height - aspect ratio 3:2, based on width
+     */
+    function setMapHeight() {
+        $("#map").height($("#map").width() * 2 / 3);
+    }
+
     // set map height on page load and window resize
     setMapHeight();
     $(window).resize(setMapHeight);
 
     // RENDER MAP
     // initialize Leaflet
-    var map = L.map('map').setView({
+    const map = L.map('map').setView({
         lon: 0,
         lat: 0
     }, 2);

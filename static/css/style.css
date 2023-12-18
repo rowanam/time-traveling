@@ -83,7 +83,7 @@ footer {
 /* BASE PAGES AND LAYOUTS */
 
 .bg-img-container {
-    background: url("../images/main_bg.jpg") center/cover;
+    background: url("https://res.cloudinary.com/dr6w4umka/image/upload/v1702872372/static/images/main_bg.7c905d221a67.jpg") center/cover;
     width: 100vw;
     height: 100vh;
 }
@@ -322,11 +322,13 @@ footer {
 
 .select-location-map {
     width: 100%;
+    max-width: 83vh;
     margin-bottom: 1rem;
 }
 
 .trip-map {
     width: 100%;
+    max-width: 93vh;
 }
 
 .full-map {

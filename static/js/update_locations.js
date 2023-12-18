@@ -1,7 +1,3 @@
-import {
-    setMapHeight
-} from './map_sizing.js';
-
 $(document).ready(function () {
 
     // -------------------- DISPLAY FUNCTIONS --------------------
@@ -47,6 +43,13 @@ $(document).ready(function () {
 
         // add styling class to name input field
         nameInput.attr("class", "location-hidden-display");
+    }
+
+    /**
+     * Set map height - aspect ratio 3:2, based on width
+     */
+    function setMapHeight() {
+        $("#map").height($("#map").width() * 2 / 3);
     }
 
     // -------------------- SET UP DISPLAY --------------------
