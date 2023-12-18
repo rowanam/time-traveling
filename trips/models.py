@@ -12,7 +12,7 @@ class Trip(models.Model):
     )
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
-    note = models.TextField(blank=True, null=True)
+    note = models.CharField(max_length=250, blank=True, null=True)
     cover_image = CloudinaryField("image", blank=True, null=True)
 
     def __str__(self):

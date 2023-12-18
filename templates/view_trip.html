@@ -26,6 +26,10 @@
             <p class="trip-detail-dates">{{ trip.start_date }} - {{ trip.end_date }}</p>
             {% endif %}
 
+            {% if trip.note %}
+            <p class="trip-detail-note">{{ trip.note }}</p>
+            {% endif %}
+
             <ul class="trip-timeline">
                 {% for location in locations %}
                 <li class="trip-timeline-item">{{ location.name }}</li>

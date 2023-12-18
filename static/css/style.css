@@ -294,6 +294,10 @@ footer {
     font-size: 1.2rem;
 }
 
+.trip-detail-note {
+    font-weight: 300;
+}
+
 .trip-timeline-item {
     padding-left: 15px;
     padding-bottom: 20px;

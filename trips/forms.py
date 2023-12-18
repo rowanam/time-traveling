@@ -20,6 +20,9 @@ class TripForm(forms.ModelForm):
     class Meta:
         model = Trip
         fields = ["title", "start_date", "end_date", "note", "cover_image"]
+        widgets = {
+            "note": forms.Textarea(attrs={"rows": 4}),
+        }
 
 
 class LocationForm(forms.ModelForm):
