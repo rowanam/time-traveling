@@ -64,6 +64,7 @@ h1 {
 .logo {
     width: 13rem;
     margin-left: 20px;
+    padding-bottom: .3rem;
 }
 
 .navbar,
@@ -71,9 +72,16 @@ footer {
     background-color: #181818;
 }
 
-.navbar,
 .header-spacing {
     height: 5rem;
+}
+
+.navbar {
+    min-height: 5rem;
+}
+
+.nav-container {
+    margin: 15px 0;
 }
 
 .footer-spacing {
@@ -82,14 +90,18 @@ footer {
 
 /* BASE PAGES AND LAYOUTS */
 
+.main-bg {
+    min-height: calc(100vh - 56px);
+}
+
 .bg-img-container {
     background: url("https://res.cloudinary.com/dr6w4umka/image/upload/v1702872372/static/images/main_bg.7c905d221a67.jpg") center/cover;
     width: 100vw;
-    height: 100vh;
+    height: calc(100vh - 5rem - 56px);
 }
 
 .container {
-    padding-top: 1rem;
+    padding-top: 2rem;
 }
 
 /* WELCOME PAGE */
@@ -133,12 +145,12 @@ footer {
 
 .button-right-col {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     align-items: center;
 }
 
 .button-right-col .btn {
-    margin-left: 15px;
+    margin-right: 15px;
 }
 
 .trip-card {
@@ -207,6 +219,10 @@ footer {
 }
 
 /* ADD TRIP AND LOCATIONS */
+
+.form-submit-btn {
+    margin-top: 2rem;
+}
 
 .locations-map-search {
     margin-bottom: 1rem;
@@ -329,8 +345,23 @@ footer {
 .trip-map {
     width: 100%;
     max-width: 93vh;
+    margin-bottom: 1rem;
 }
 
 .full-map {
-    height: calc(100vh - 5rem - 56px)
+    height: calc(100vh - 5rem - 56px);
+}
+
+/* MEDIA QUERIES */
+
+/* bs md */
+@media (min-width: 768px){
+    .button-right-col {
+        justify-content: flex-end;
+    }
+
+    .button-right-col .btn {
+        margin-right: 0;
+        margin-left: 15px;
+    }
 }

@@ -14,6 +14,17 @@ $(document).ready(function () {
     }
 
     /**
+     * Disable location adding button if locations list is empty
+     */
+    function updateSubmitButtonDisable() {
+        if ($("#locations-list > li").length == 0) {
+            $("#save-locations-button").prop("disabled", true);
+        } else {
+            $("#save-locations-button").prop("disabled", false);
+        }
+    }
+
+    /**
      * Change the display of a location item:
      * hide the label, add a pin that allows draggable reordering,
      * and control options menu
@@ -57,8 +68,9 @@ $(document).ready(function () {
     setMapHeight();
     $(window).resize(setMapHeight);
 
-    // show instructions if there are no locations
+    // show instructions and disable submit button if there are no locations
     updateInstructionsDisplay();
+    updateSubmitButtonDisable();
 
     // update displays for existing location item forms
     for (let i = 0; i < $("#id_locations-INITIAL_FORMS").val(); i++) {
@@ -326,6 +338,8 @@ $(document).ready(function () {
             // add location data to a new form
             addLocationForm(currentLocationObject);
 
+            updateSubmitButtonDisable();
+
             // clear currentLocationObject variable and map search bar
             currentLocationObject = null;
             auto.destroy();
@@ -368,6 +382,9 @@ $(document).ready(function () {
             $("#deleted-locations").append($(formLI));
 
             reorderLocations();
+
+            updateInstructionsDisplay();
+            updateSubmitButtonDisable();
         }
     });
 });

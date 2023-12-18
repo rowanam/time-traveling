@@ -28,8 +28,8 @@
 
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg fixed-top">
-        <div class="container-fluid">
+    <nav class="navbar navbar-expand-md bg-body-tertiary fixed-top">
+        <div class="container-fluid nav-container">
             {% if user.is_authenticated %}
             <a class="navbar-brand" href="{% url 'trips_dashboard' %}"><img class="logo" src="{% static 'images/logo.png' %}"
                     alt="Time Traveling Logo"></a>
@@ -37,7 +37,7 @@
             <a class="navbar-brand" href="{% url 'home' %}"><img class="logo" src="{% static 'images/logo.png' %}"
                     alt="Time Traveling Logo"></a>
             {% endif %}
-            <span class="navbar-text text-muted">
+            <span class="navbar-text text-muted d-none d-md-inline">
                 Visualize your travels
             </span>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
@@ -45,7 +45,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarText">
-                <ul class="navbar-nav mb-2 mb-lg-0">
+                <ul class="navbar-nav mb-2 ms-4 mb-lg-0">
                     {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'trips_dashboard' %}">Home</a>
@@ -77,11 +77,11 @@
         <div class="header-spacing"></div>
         {% block content %}
         {% endblock content %}
-        <div class="footer-spacing"></div>
+        <!-- <div class="footer-spacing"></div> -->
     </main>
 
     <!-- Footer -->
-    <footer class="footer mt-auto py-3 fixed-bottom">
+    <footer class="footer mt-auto py-3">
         <p class="m-0 text-center text-white">Follow us:
             <i class="fa-brands fa-facebook ms-3"></i>
             <i class="fa-brands fa-twitter ms-3"></i>

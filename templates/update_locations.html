@@ -47,7 +47,7 @@
                 <ul id="deleted-locations"></ul>
                 <div>
                     <p>
-                        <button class="btn btn-basic btn-general" type="submit">Save Locations</button>
+                        <button class="btn btn-basic btn-general form-submit-btn" id="save-locations-button" type="submit">Save Locations</button>
                     </p>
                 </div>
             </form>
@@ -84,7 +84,6 @@
 <!-- Initial coordinates stored as JSON -->
 {{ coordinates|json_script:"initialCoordinates" }}
 
-<script type="module" src="{% static 'js/map_sizing.js' %}"></script>
-<script type="module" src="{% static 'js/update_locations.js' %}"></script>
+<script src="{% static 'js/update_locations.js' %}"></script>
 
 {% endblock %}
