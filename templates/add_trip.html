@@ -18,7 +18,7 @@
 <div class="container">
     <h1>New Trip</h1>
 
-    <form method="POST" autocomplete="off">
+    <form method="POST" autocomplete="off" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form|crispy }}
         <div>
