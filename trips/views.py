@@ -113,4 +113,16 @@ class UpdateLocations(LoginRequiredMixin, InlineFormSetView):
 
 class LifeMap(View):
     def get(self, request):
-        return render(request, "life_map.html")
+        user = request.user
+        trips = Trip.objects.filter(user=user)
+
+        coordinates = []
+
+        # get a list of coordinates pairs for each trip
+        for trip in trips:
+            locations = Location.objects.filter(trip=trip).order_by("order")
+            coordinates.append([[l.lat, l.long] for l in locations])
+
+        context = {"coordinates": coordinates}
+
+        return render(request, "life_map.html", context)

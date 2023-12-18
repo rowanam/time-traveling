@@ -330,5 +330,5 @@ footer {
 }
 
 .full-map {
-    height: 80vh;
+    height: calc(100vh - 5rem - 56px)
 }

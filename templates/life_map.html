@@ -10,9 +10,7 @@
 
 {% block content %}
 
-<h1>Map</h1>
-
-<section class="container-fluid">
+<section>
     <div class="full-map" id="map"></div>
 </section>
 
@@ -21,34 +19,14 @@
 
 {% block scripts %}
 
+{% load static %}
+
 <!-- Leaflet -->
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
-<!-- Leaflet sample map -->
-<script>
-    // initialize Leaflet
-    var map = L.map('map').setView({
-        lon: 0,
-        lat: 0
-    }, 2);
+<!-- Coordinates stored as JSON -->
+{{ coordinates|json_script:"coordinates" }}
 
-    // add the OpenStreetMap tiles
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
-    }).addTo(map);
-
-    // show the scale bar on the lower left corner
-    L.control.scale({
-        imperial: true,
-        metric: true
-    }).addTo(map);
-
-    // show a marker on the map
-    L.marker({
-        lon: 0,
-        lat: 0
-    }).bindPopup('The center of the world').addTo(map);
-</script>
+<script src="{% static 'js/life_map.js' %}"></script>
 
 {% endblock %}
