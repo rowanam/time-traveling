@@ -144,3 +144,60 @@ class TestAddTripView(TestCase):
 
         # check redirect to locations, url passed pk of newly created trip
         self.assertRedirects(response, "/locations/1")
+
+
+class TestEditTripView(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        test_user1 = User.objects.create_user(
+            username="testuser1", password="Password*1"
+        )
+        User.objects.create_user(username="testuser2", password="Password*1")
+
+        Trip.objects.create(title="Test Title", user=test_user1)
+
+    def test_redirect_if_not_logged_in(self):
+        response = self.client.get("/edit-trip/1")
+        self.assertRedirects(response, "/accounts/login/?next=/edit-trip/1")
+
+    def test_404_response_if_trip_not_belong_to_logged_in_user(self):
+        self.client.login(username="testuser2", password="Password*1")
+        response = self.client.get("/edit-trip/1")
+        self.assertEqual(response.status_code, 404)
+
+    def test_redirect_to_locations_on_success(self):
+        self.client.login(username="testuser1", password="Password*1")
+        response = self.client.post("/edit-trip/1", {"title": "New Test Title"})
+
+        # check redirect to locations, url passed pk of newly created trip
+        self.assertRedirects(response, "/locations/1")
+
+
+class TestDeleteTripView(TestCase):
+    def setUp(self):
+        test_user1 = User.objects.create_user(
+            username="testuser1", password="Password*1"
+        )
+        User.objects.create_user(username="testuser2", password="Password*1")
+
+        Trip.objects.create(title="Test Title", user=test_user1)
+
+    def test_redirect_if_not_logged_in(self):
+        response = self.client.get("/delete-trip/1")
+        self.assertRedirects(response, "/accounts/login/?next=/delete-trip/1")
+
+    def test_404_response_if_trip_not_belong_to_logged_in_user(self):
+        self.client.login(username="testuser2", password="Password*1")
+        response = self.client.get("/delete-trip/1")
+        self.assertEqual(response.status_code, 404)
+
+    def test_trip_deleted_if_correct_user_logged_in(self):
+        self.client.login(username="testuser1", password="Password*1")
+        self.client.get("/delete-trip/1")
+        trips = Trip.objects.filter(id=1)
+        self.assertEqual(len(trips), 0)
+
+    def test_redirect_to_dashboard_on_success(self):
+        self.client.login(username="testuser1", password="Password*1")
+        response = self.client.get("/delete-trip/1")
+        self.assertRedirects(response, "/dashboard/")
