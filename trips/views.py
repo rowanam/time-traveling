@@ -109,3 +109,8 @@ class UpdateLocations(LoginRequiredMixin, InlineFormSetView):
 
     def get_success_url(self):
         return reverse("view_trip", args=[self.object.pk])
+
+
+class LifeMap(View):
+    def get(self, request):
+        return render(request, "life_map.html")
