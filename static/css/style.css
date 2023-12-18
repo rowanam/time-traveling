@@ -143,6 +143,14 @@ footer {
 
 /* TRIPS DASHBOARD */
 
+.dashboard-empty-display-wrapper {
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
 .button-right-col {
     display: flex;
     justify-content: flex-start;

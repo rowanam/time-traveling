@@ -9,12 +9,28 @@
         </div>
         <div class="col-12 ms-2 ms-md-0 col-md-5 button-right-col">
             <a class="btn btn-basic btn-general" href="{% url 'add_trip' %}" role="button">Add a trip</a>
+            {% if trips %}
             <button class="btn btn-basic btn-edit" type="button" data-bs-toggle="collapse"
                 data-bs-target=".trip-card-controls" aria-expanded="false">Edit trips</button>
+            {% endif %}
         </div>
     </div>
 
     <div class="row">
+
+        <!-- No Trips -->
+        {% if not trips %}
+        <div class="col">
+            <div class="dashboard-empty-display-wrapper">
+                <div>
+                    <p>Looks like you don't have any trips yet... Create a trip to get started</p>
+                    <p>
+                        <a class="btn btn-basic btn-general" href="{% url 'add_trip' %}" role="button">Create a trip</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
 
         <!-- Trips Column -->
         <div class="col-12 mt-3 left">
@@ -38,8 +54,8 @@
                             <p class="dashboard-trip-dates">{{ trip.start_date }} - {{ trip.end_date }}</p>
                             {% endif %}
                             <div class="collapse trip-card-controls">
-                                <a class="edit-icon-btn trip-card-btn" href="{% url 'edit_trip' trip.id %}" role="button"><i
-                                        class="fa-solid fa-pencil"></i></a>
+                                <a class="edit-icon-btn trip-card-btn" href="{% url 'edit_trip' trip.id %}"
+                                    role="button"><i class="fa-solid fa-pencil"></i></a>
                                 <button class="delete-icon-btn trip-card-btn" type="button" data-bs-toggle="modal"
                                     data-bs-target="#modal-{{ trip.id }}"><i class="fa-solid fa-trash"></i></button>
                             </div>
