@@ -92,6 +92,10 @@ footer {
     height: 56px;
 }
 
+.copyright-text {
+    color: #34825f;
+}
+
 /* BASE PAGES AND LAYOUTS */
 
 .main-bg {
