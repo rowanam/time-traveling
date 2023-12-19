@@ -19,7 +19,7 @@
     {% block styles %}
     {% endblock styles %}
 
-    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}" >
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
@@ -28,11 +28,11 @@
 
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-md bg-body-tertiary fixed-top">
+    <nav class="navbar navbar-expand-md fixed-top">
         <div class="container-fluid nav-container">
             {% if user.is_authenticated %}
-            <a class="navbar-brand" href="{% url 'trips_dashboard' %}"><img class="logo" src="{% static 'images/logo.png' %}"
-                    alt="Time Traveling Logo"></a>
+            <a class="navbar-brand" href="{% url 'trips_dashboard' %}"><img class="logo"
+                    src="{% static 'images/logo.png' %}" alt="Time Traveling Logo"></a>
             {% else %}
             <a class="navbar-brand" href="{% url 'home' %}"><img class="logo" src="{% static 'images/logo.png' %}"
                     alt="Time Traveling Logo"></a>
@@ -75,9 +75,23 @@
     <!-- Content -->
     <main class="flex-shrink-0 main-bg">
         <div class="header-spacing"></div>
+
+        <!-- Messages -->
+        <div class="container-fluid messages-wrapper">
+            <div class="row">
+                <div class="col col-md-8 offset-md-2">
+                    {% for message in messages %}
+                    <div class="alert {{ message.tags }} alert-dismissible fade show message-div" id="msg" role="alert">
+                        {{ message | safe }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
         {% block content %}
         {% endblock content %}
-        <!-- <div class="footer-spacing"></div> -->
     </main>
 
     <!-- Footer -->
@@ -100,6 +114,18 @@
 
     {% block scripts %}
     {% endblock scripts %}
+
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                let messageList = document.querySelectorAll(".message-div");
+                messageList.forEach(function(message) {
+                    let alert = new bootstrap.Alert(message)
+                    alert.close();
+                });
+            }, 4000);
+        });
+    </script>
 </body>
 
 </html>

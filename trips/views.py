@@ -3,7 +3,9 @@ from django.views import View
 from django.views.generic.edit import CreateView, UpdateView
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
-from extra_views import InlineFormSetView
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
+from extra_views import InlineFormSetView, FormSetSuccessMessageMixin
 from .forms import TripForm, LocationForm, LocationInlineFormSet
 from .models import Trip, Location
 
@@ -55,18 +57,20 @@ class AddTrip(LoginRequiredMixin, CreateView):
         self.object = form.save(commit=False)
         self.object.user = self.request.user
         self.object.save()
+        messages.success(self.request, f"{self.object.title} created successfully.")
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
         return reverse("locations", args=[self.object.pk])
 
 
-class EditTrip(LoginRequiredMixin, UpdateView):
+class EditTrip(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     """A class-based view for updating a trip."""
 
     model = Trip
     form_class = TripForm
     template_name = "edit_trip.html"
+    success_message = "%(title)s updated successfully."
 
     def get_queryset(self):
         return Trip.objects.filter(user=self.request.user)
@@ -83,10 +87,13 @@ class DeleteTrip(LoginRequiredMixin, View):
         user_trips_queryset = Trip.objects.filter(user=user)
         trip = get_object_or_404(user_trips_queryset, id=trip_id)
         trip.delete()
+        messages.success(request, f"{trip.title} deleted successfully.")
         return HttpResponseRedirect(reverse("trips_dashboard"))
 
 
-class UpdateLocations(LoginRequiredMixin, InlineFormSetView):
+class UpdateLocations(
+    LoginRequiredMixin, FormSetSuccessMessageMixin, InlineFormSetView
+):
     """A class-based view for changing location records associated with a trip."""
 
     model = Trip
@@ -95,6 +102,7 @@ class UpdateLocations(LoginRequiredMixin, InlineFormSetView):
     formset_class = LocationInlineFormSet
     factory_kwargs = {"extra": 0}
     template_name = "update_locations.html"
+    success_message = "Locations saved successfully."
 
     def get_queryset(self):
         return Trip.objects.filter(user=self.request.user)

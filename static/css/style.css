@@ -104,6 +104,18 @@ footer {
     padding-top: 2rem;
 }
 
+.messages-wrapper {
+    padding: 0;
+    margin: 0;
+    position: absolute;
+}
+
+.message-div {
+    color: #FFF;
+    margin-top: 1rem;
+    margin-bottom: 0;
+}
+
 /* WELCOME PAGE */
 
 .page-wrapper {
