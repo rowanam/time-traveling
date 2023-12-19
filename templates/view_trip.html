@@ -24,6 +24,7 @@
         <div class="col-md-4 order-2 order-md-1">
             {% if trip.start_date and trip.end_date %}
             <p class="trip-detail-dates">{{ trip.start_date }} - {{ trip.end_date }}</p>
+            <hr class="dates-rule">
             {% endif %}
 
             {% if trip.note %}

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500&family=Lato:wght@100;300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500&family=Lato:wght@100;300;400;700&family=Nothing+You+Could+Do&display=swap');
 
 body {
     background-color: #252525;
@@ -212,8 +212,7 @@ footer {
 
 .trip-card .card-title {
     color: white;
-    font-family: 'Cormorant Garamond', Lato, sans-serif;
-    font-weight: 600;
+    font-family: 'Nothing You Could Do', 'Cormorant Garamond', sans-serif;
 }
 
 .dashboard-trip-dates {
@@ -340,8 +339,12 @@ footer {
 }
 
 .trip-detail-dates {
-    font-family: 'Cormorant Garamond', Lato, sans-serif;
-    font-size: 1.2rem;
+    font-family: Lato, sans-serif;
+    font-weight: 300;
+}
+
+.dates-rule {
+    display: none;
 }
 
 .trip-detail-note {
@@ -405,5 +408,9 @@ footer {
 
     .title-logo {
         width: 70%;
+    }
+
+    .dates-rule {
+        display: block;
     }
 }

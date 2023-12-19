@@ -45,7 +45,7 @@ The site uses a dark background to contrast with and highlight the images and ma
 
 The main theme color is a shade of green (#34825f), which reflects a natural color palette and contrasts well with the dark background. Orange (#ffa500) is used for the time-space lines as a complementing secondary theme color and to stand out against the map background.
 
-[Lato](https://fonts.google.com/specimen/Lato) is the main font, used in the logo and across the site and chosen for its clean, modern look. [Coromorant Garamond](https://fonts.google.com/specimen/Cormorant+Garamond) is used a secondary font, to provide variety, and again to suggest a trip photo book where one might handwrite information.
+[Lato](https://fonts.google.com/specimen/Lato) is the main font, used in the logo and across the site and chosen for its clean, modern look. [Nothing You Could Do](https://fonts.google.com/specimen/Nothing+You+Could+Do) is used a secondary font, to provide variety, and again to suggest a trip photo book where one might handwrite information. [Coromorant Garamond](https://fonts.google.com/specimen/Cormorant+Garamond) is used as a back-up font.
 
 A map icon is used in the logo and as the favicon.
 
@@ -201,3 +201,4 @@ Steps to deploy:
 
 - Logo and favicon - [Logo.com](https://logo.com/)
 - Main background - [Image by GarryKillian](https://www.freepik.com/free-vector/terrain-big-data-visualization_7941096.htm#query=dark%20map&position=0&from_view=search&track=ais&uuid=7850fb46-cc4c-401c-bb49-be112d860467) on Freepik
+- Fonts - [Google Fonts](https://fonts.google.com/)
