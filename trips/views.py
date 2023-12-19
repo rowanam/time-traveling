@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import F
 from extra_views import InlineFormSetView, FormSetSuccessMessageMixin
 from .forms import TripForm, LocationForm, LocationInlineFormSet
 from .models import Trip, Location
@@ -22,7 +23,9 @@ class TripList(LoginRequiredMixin, View):
 
     def get(self, request):
         user = request.user
-        trips = Trip.objects.filter(user=user).order_by("-start_date")
+        trips = Trip.objects.filter(user=user).order_by(
+            F("start_date").desc(nulls_last=True)
+        )
         context = {"trips": trips}
         return render(request, "trips_dashboard.html", context)
 
