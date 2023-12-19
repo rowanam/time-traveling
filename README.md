@@ -172,7 +172,7 @@ Authentication:
 Front-end controls:
 
 - Datepicker - [bootstrap-datepicker](https://github.com/uxsolutions/bootstrap-datepicker)
-- Sortable list - [jQuery UI](https://jqueryui.com/)
+- Sortable list - [SortableJS](https://github.com/SortableJS/Sortable)
 
 Map search and autocomplete:
 
@@ -187,15 +187,93 @@ Other:
 
 ## Bug Fixes
 
+### Sortable list on touchscreen
+
+The jQuery UI plugin used to make the locations list re-orderable by dragging does not have support for touchscreen devices. This issue was fixed by switching to a different JavaScript library, SortableJS, which enables the list sorting functionality to be accessible on touchscreen.
+
+### Image uploading by user
+
+When a model image field was first implemented with Cloudinary, images could be uploaded from the admin site but not from the useable site itself. This turned out to simply be due to the lack of the enctype attribute on the form.
+
+### Static files not loading in deployment
+
+On the second major deployment, after the bulk of the project had been built, the background image and JavaScript files weren't loading on the deployed site. This was fixed by replacing the file paths with absolute paths.
+
+### Location forms with empty names
+
+During some testing attempts, if a user added a location, removed the name and then deleted the location, this would cause form submission issues since the name is required but the form gets hidden on deletion and the user can no longer see which location they selected. This was bypassed by filling the name with deletion-related text to ensure it was non-empty.
+
+While fixing this issue, it was discovered that if a location name was deleted and the form then submitted, the page would reload with all empty fields on the bottom of the page, meaning the user could no longer see where they had been placed in the list. The required attribute was added to name fields to ensure form validation before the form can be submitted, thereby avoiding reloading issues.
+
+### Dashboard cover images filling cards
+
+The cover images on the trip dashboard initially showed some background color on certain device sizes. This was fixed by setting both the height and width of the images so that the object-fit property could work correctly.
+
+### Responsive layouts
+
+The website was developed primarily for laptop use so there were several display and styling issues on mobile screen sizes. These were fixed by changging the Bootstrap classes and adding some custom styling.
+
 ## Testing
 
 ### Unit Tests
+
+#### Python Testing
 
 All unit tests passed and [coverage](https://coverage.readthedocs.io/en/7.3.3/) returned 100%.
 
 ![Testing coverage](documentation/images/testing_coverage.png)
 
 ### User Testing
+
+#### JavaScript Testing
+
+Most pages don't use significant amounts of JavaScript, and the small amounts of use for those are covered in the User Story testing steps below. The three main pages that use significant JavaScript are updating locations and rendering the trip maps and life time maps. Specific testing of the JavaScript functionality of those pages is described here.
+
+Update Locations JavaScript
+
+| Expectation                       | Met |
+| --------------------------------- | --- |
+| Map displays | yes |
+| Map maintains aspect ratio and resizes at breakpoints | yes |
+| Search bar displays | yes |
+| If locations list is empty, instructions are displyed | yes |
+| If locations list is empty, "Save Locations" is disabled | yes |
+| When a location is entered, a list of options appears | yes |
+| When an option is selected, a marker is added to the map | yes |
+| When an option is selected, an "add" button appears | yes |
+| When "add" is clicked, the location is added to the locations list | yes |
+| The marker then disappears from the map | yes |
+| The "add" button disappears | yes |
+| If there are at least 2 locations, a polyline is drawn on the map connecting all locations | yes |
+| Locations are connected in the correct order | yes |
+| A menu is displayed next to each location with a delete option | yes |
+| When clicked, the location is removed from the list | yes |
+| The location is also removed from the map line | yes |
+| If there is one or no locations left in the list, the polyline disappears | yes |
+| Locations can be clicked and dragged to reorder them | yes |
+| When a location is dropped to a new position, its order is also updated on the map | yes |
+| The name field can be changed by the user | yes |
+| When "Save Locations" is clicked, all of the above changes are saved correctly | yes |
+| When the locations page is opened to edit a trip, all exisiting locations are displayed in the list and on the map, in the correct order | yes |
+
+Life Time Map
+
+| Expectation                       | Met |
+| --------------------------------- | --- |
+| Map renders | yes |
+| Map is displayed over the entire page | yes |
+| All of the logged in user's trips are displayed on the map | yes |
+| Only the current user's trips are displayed | yes |
+
+Trip Detail Map
+
+| Expectation                       | Met |
+| --------------------------------- | --- |
+| Map renders | yes |
+| Map maintains aspect ratio and resizes at breakpoints | yes |
+| The locations in the current trip are connected by a line on the map in the correct order | yes |
+
+#### Testing User Stories
 
 <details>
 <summary>Registration</summary
@@ -321,6 +399,24 @@ All unit tests passed and [coverage](https://coverage.readthedocs.io/en/7.3.3/) 
 - If the user searches for a url that doesn't exist, a 404 page is displayed with a link to return home
 - If a logged out user tries to access a page that requires login, they are redirected to the log in page
 </details>
+
+<hr>
+
+The above testing steps were carried out on both a laptop and a mobile phone.
+
+Using Google Developer tools, page layouts, buttons, responsiveness and element displays were tested across the range of device sizes.
+
+### Validation and linting
+
+- Python files were run through [CI Python Linter](https://pep8ci.herokuapp.com/) with no significant errors
+
+![Python linter](documentation/images/testing_python_linter.png)
+
+- JavaScript files were run through [jshint](https://jshint.com/) with no significant errors
+
+- CSS was passed through the official [Jigsaw](https://jigsaw.w3.org/css-validator/validator) validator with no significant errors
+
+![CSS validator](documentation/images/testing_css_validator.png)
 
 ## Deployment
 
