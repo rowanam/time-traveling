@@ -1,5 +1,19 @@
 $(document).ready(function () {
 
+    // -------------------- SET UP FORMS --------------------
+
+    // move forms with "name" fields of "_to_delete_" to deleted forms list
+    // so that if page reloads because form submission failed, deleted forms will be re-hidden
+    $("#locations-list > li").each(function () {
+        let nameField = $(" input[id$='-name']", this)[0];
+        if ($(nameField).val() == "_to_delete_") {
+            $("#deleted-locations").append($(this));
+        }
+    });
+
+    // remove "required" attribute from empty form to prevent form submission error
+    $("#id_locations-__prefix__-name").removeAttr("required");
+
     // -------------------- DISPLAY FUNCTIONS --------------------
 
     /**
@@ -270,6 +284,9 @@ $(document).ready(function () {
         let order = $("#locations-list > li").length
         $(`#id_locations-${formIndex}-order`).val(order);
 
+        // set name field "required" attribute
+        $(`#id_locations-${formIndex}-name`).attr("required", "required");
+
         // increment total forms in management form
         $("#id_locations-TOTAL_FORMS").val(parseInt(formIndex) + 1);
     }
@@ -390,6 +407,11 @@ $(document).ready(function () {
             // move the form li into deleted-locations list to hide it
             // moved into separate list so ordering isn't affected
             $("#deleted-locations").append($(formLI));
+
+            // set name field to "_to_delete_"
+            // (to prevent empty field from messing up form submission)
+            let nameField = $(" input[id$='-name']", formLI)[0]
+            $(nameField).val("_to_delete_");
 
             reorderLocations();
 

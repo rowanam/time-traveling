@@ -54,6 +54,9 @@ class LocationForm(forms.ModelForm):
             "name": _("Location name"),
         }
         ordering = ("order",)
+        widgets = {
+            "name": forms.TextInput(attrs={"required": True}),
+        }
 
 
 class LocationInlineFormSet(forms.models.BaseInlineFormSet):
