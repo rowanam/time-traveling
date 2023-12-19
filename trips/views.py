@@ -12,14 +12,16 @@ from .models import Trip, Location
 
 
 class Welcome(View):
-    """A class-based view for the welcome page - home page for non-logged-in users."""
+    """A class-based view for the welcome page -
+    home page for non-logged-in users."""
 
     def get(self, request):
         return render(request, "welcome.html")
 
 
 class TripList(LoginRequiredMixin, View):
-    """A class-based view for the trips dashboard page - home page for logged-in users."""
+    """A class-based view for the trips dashboard page -
+    home page for logged-in users."""
 
     def get(self, request):
         user = request.user
@@ -39,7 +41,7 @@ class TripDetail(LoginRequiredMixin, View):
         trip = get_object_or_404(user_trips_queryset, id=trip_id)
         trip_locations = Location.objects.filter(trip=trip).order_by("order")
 
-        coordinates_seq = [[location.lat, location.long] for location in trip_locations]
+        coordinates_seq = [[loc.lat, loc.long] for loc in trip_locations]
 
         context = {
             "trip": trip,
@@ -60,7 +62,8 @@ class AddTrip(LoginRequiredMixin, CreateView):
         self.object = form.save(commit=False)
         self.object.user = self.request.user
         self.object.save()
-        messages.success(self.request, f"{self.object.title} created successfully.")
+        msg = f"{self.object.title} created successfully."
+        messages.success(self.request, msg)
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
@@ -97,7 +100,8 @@ class DeleteTrip(LoginRequiredMixin, View):
 class UpdateLocations(
     LoginRequiredMixin, FormSetSuccessMessageMixin, InlineFormSetView
 ):
-    """A class-based view for changing location records associated with a trip."""
+    """A class-based view for changing location records
+    associated with a trip."""
 
     model = Trip
     inline_model = Location
@@ -111,10 +115,11 @@ class UpdateLocations(
         return Trip.objects.filter(user=self.request.user)
 
     def get_context_data(self, **kwargs):
-        """Pass context data to the view. Used here to pass initial location cordinates."""
+        """Pass context data to the view. Used here to pass
+        initial location cordinates."""
         context = super().get_context_data(**kwargs)
-        trip_locations = Location.objects.filter(trip=self.object).order_by("order")
-        coordinates_seq = [[loc.lat, loc.long] for loc in trip_locations]
+        locations = Location.objects.filter(trip=self.object).order_by("order")
+        coordinates_seq = [[loc.lat, loc.long] for loc in locations]
         context["coordinates"] = coordinates_seq
         return context
 
@@ -134,7 +139,7 @@ class LifeMap(LoginRequiredMixin, View):
         # get a list of coordinates pairs for each trip
         for trip in trips:
             locations = Location.objects.filter(trip=trip).order_by("order")
-            coordinates.append([[l.lat, l.long] for l in locations])
+            coordinates.append([[loc.lat, loc.long] for loc in locations])
 
         context = {"coordinates": coordinates}
 

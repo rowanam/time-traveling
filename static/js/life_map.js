@@ -46,4 +46,4 @@ $(document).ready(function () {
         color: 'orange',
         weight: 1,
     }).addTo(map);
-})
+});

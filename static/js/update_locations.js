@@ -282,7 +282,7 @@ $(document).ready(function () {
         $(`#id_locations-${formIndex}-lat`).val(lat);
         $(`#id_locations-${formIndex}-long`).val(long);
 
-        let order = $("#locations-list > li").length
+        let order = $("#locations-list > li").length;
         $(`#id_locations-${formIndex}-order`).val(order);
 
         // set name field "required" attribute
@@ -413,7 +413,7 @@ $(document).ready(function () {
 
             // set name field to "_to_delete_"
             // (to prevent empty field from messing up form submission)
-            let nameField = $(" input[id$='-name']", formLI)[0]
+            let nameField = $(" input[id$='-name']", formLI)[0];
             $(nameField).val("_to_delete_");
 
             reorderLocations();
