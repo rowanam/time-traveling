@@ -138,7 +138,7 @@ footer {
 }
 
 .title-logo {
-    width: 70%;
+    width: 100%;
 }
 
 .welcome-subtitle {
@@ -155,6 +155,11 @@ footer {
 
 .welcome-card a {
     color: #3d9970;
+}
+
+.welcome-page-btns-wrapper {
+    display: flex;
+    justify-content: space-evenly;
 }
 
 /* TRIPS DASHBOARD */
@@ -396,5 +401,9 @@ footer {
 
     .content-box {
         width: 65%;
+    }
+
+    .title-logo {
+        width: 70%;
     }
 }

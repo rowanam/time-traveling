@@ -10,7 +10,19 @@
 <h2 class="welcome-subtitle">Visualize your travels</h2>
 <p>Welcome to the app where you can plan trips, track your adventures, and visualize the
     time you've spent traveling.</p>
+
+{% if user.is_authenticated %}
+<p>You are currently logged in as {{ user.username }}.</p>
+<div class="welcome-page-btns-wrapper">
+    <a class="btn btn-basic btn-general" id="background-page-btn" href="{% url 'trips_dashboard' %}"
+        role="button">Dashboard</a>
+    <a class="btn btn-basic btn-general" id="background-page-btn" href="{% url 'trips_dashboard' %}"
+        role="button">Create a
+        Trip</a>
+</div>
+{% else %}
 <p>First time here? <a href="{% url 'account_signup' %}">Register</a> to start building your travel maps.</p>
 <p>Or <a href="{% url 'account_login' %}">log in</a> if you are a returning user.</p>
+{% endif %}
 
 {% endblock %}
