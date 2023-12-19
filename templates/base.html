@@ -113,9 +113,10 @@
 
     <script>
         $(document).ready(function () {
+            // remove messages after 4 seconds
             setTimeout(function () {
                 let messageList = document.querySelectorAll(".message-div");
-                messageList.forEach(function(message) {
+                messageList.forEach(function (message) {
                     let alert = new bootstrap.Alert(message)
                     alert.close();
                 });

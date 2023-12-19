@@ -123,6 +123,8 @@ class UpdateLocations(
 
 
 class LifeMap(LoginRequiredMixin, View):
+    """A class-based view for displaying all user trips on a map."""
+
     def get(self, request):
         user = request.user
         trips = Trip.objects.filter(user=user)

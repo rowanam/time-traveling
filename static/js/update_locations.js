@@ -124,8 +124,7 @@ $(document).ready(function () {
     // -------------------- ADD AUTOCOMPLETE SEARCH BAR --------------------
     // code adapted from Leaflet.Autocomplete documentation
     const auto = new Autocomplete("search", {
-        // default selects the first item in
-        // the list of results
+        // default selects the first item in the list of results
         selectFirst: true,
 
         // the number of characters entered should start searching
