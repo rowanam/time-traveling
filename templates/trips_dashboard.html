@@ -53,11 +53,12 @@
                             {% if trip.start_date and trip.end_date %}
                             <p class="dashboard-trip-dates">{{ trip.start_date }} - {{ trip.end_date }}</p>
                             {% endif %}
-                            <div class="collapse trip-card-controls">
+                            <div class="collapse trip-card-controls" aria-hidden="true">
                                 <a class="edit-icon-btn trip-card-btn" href="{% url 'edit_trip' trip.id %}"
-                                    role="button"><i class="fa-solid fa-pencil"></i></a>
-                                <button class="delete-icon-btn trip-card-btn" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#modal-{{ trip.id }}"><i class="fa-solid fa-trash"></i></button>
+                                    role="button" aria-label="Edit trip"><i class="fa-solid fa-pencil"></i></a>
+                                <button class="delete-icon-btn trip-card-btn" type="button" aria-label="Delete trip"
+                                    data-bs-toggle="modal" data-bs-target="#modal-{{ trip.id }}"><i
+                                        class="fa-solid fa-trash"></i></button>
                             </div>
                         </div>
                     </div>

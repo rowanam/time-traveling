@@ -63,6 +63,16 @@ h1 {
     color: #FFF;
 }
 
+.map-style-button {
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    z-index: 10000;
+    background-color: orange;
+    border-radius: 2px;
+    border: 2px solid #646464;
+}
+
 /* HEADER AND FOOTER */
 
 .logo {
@@ -252,7 +262,7 @@ footer {
     transform: scale(1.3);
 }
 
-/* ADD TRIP AND LOCATIONS */
+/* TRIP AND LOCATIONS FORMS */
 
 .form-submit-btn {
     margin-top: 2rem;
@@ -395,19 +405,9 @@ footer {
     height: calc(100vh - 5rem - 56px);
 }
 
-.map-style-button {
-    position: absolute;
-    top: 1rem;
-    right: 2rem;
-    z-index: 10000;
-    background-color: orange;
-    border-radius: 2px;
-    border: 2px solid #646464;
-}
-
 /* MEDIA QUERIES */
 
-/* bs md */
+/* bootstrap md */
 @media (min-width: 768px){
     .button-right-col {
         justify-content: flex-end;

@@ -122,6 +122,7 @@ $(document).ready(function () {
     }).addTo(map);
 
     // -------------------- ADD AUTOCOMPLETE SEARCH BAR --------------------
+    // code adapted from Leaflet.Autocomplete documentation
     const auto = new Autocomplete("search", {
         // default selects the first item in
         // the list of results
