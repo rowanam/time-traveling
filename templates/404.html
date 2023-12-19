@@ -1,0 +1,18 @@
+{% extends "background.html" %}
+
+{% block box %}
+
+<h1>404</h1>
+
+<p>Oh no... it looks like you got lost.</p>
+<p>Hop on a plane and go back home.</p>
+
+{% if user.is_authenticated %}
+<a class="btn btn-basic btn-general" id="background-page-btn" href="{% url 'trips_dashboard' %}" role="button">
+    Take me Home
+</a>
+{% else %}
+<a class="btn btn-basic btn-general" id="background-page-btn" href="{% url 'home' %}" role="button">Take me Home</a>
+{% endif %}
+
+{% endblock %}

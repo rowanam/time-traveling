@@ -59,6 +59,10 @@ h1 {
     color: #FFF;
 }
 
+#background-page-btn {
+    color: #FFF;
+}
+
 /* HEADER AND FOOTER */
 
 .logo {
@@ -129,7 +133,7 @@ footer {
 }
 
 .content-box {
-    width: 65%;
+    width: 85%;
     padding: 2rem 3rem;
 }
 
@@ -388,5 +392,9 @@ footer {
     .button-right-col .btn {
         margin-right: 0;
         margin-left: 15px;
+    }
+
+    .content-box {
+        width: 65%;
     }
 }
