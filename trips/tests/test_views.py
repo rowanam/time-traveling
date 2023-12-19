@@ -178,9 +178,20 @@ class TestDeleteTripView(TestCase):
         test_user1 = User.objects.create_user(
             username="testuser1", password="Password*1"
         )
-        User.objects.create_user(username="testuser2", password="Password*1")
+        test_user2 = User.objects.create_user(
+            username="testuser2", password="Password*1"
+        )
 
-        Trip.objects.create(title="Test Title", user=test_user1)
+        trip1 = Trip.objects.create(title="Test Title", user=test_user1)
+        trip2 = Trip.objects.create(title="Test Title", user=test_user2)
+
+        # create 3 locations in trip1
+        for i in range(3):
+            Location.objects.create(name="Test", lat=0, long=0, order=i, trip=trip1)
+
+        # create 2 locations in trip2
+        for i in range(2):
+            Location.objects.create(name="Test", lat=0, long=0, order=i, trip=trip2)
 
     def test_redirect_if_not_logged_in(self):
         response = self.client.get("/delete-trip/1")
@@ -196,6 +207,18 @@ class TestDeleteTripView(TestCase):
         self.client.get("/delete-trip/1")
         trips = Trip.objects.filter(id=1)
         self.assertEqual(len(trips), 0)
+
+    def test_trip_locations_deleted_with_trip(self):
+        self.client.login(username="testuser1", password="Password*1")
+
+        # before trip deletion there should be 5 location objects in db
+        locations = Location.objects.all()
+        self.assertEqual(len(locations), 5)
+
+        # after deletion there should be 2 locations
+        self.client.get("/delete-trip/1")
+        locations = Location.objects.all()
+        self.assertEqual(len(locations), 2)
 
     def test_redirect_to_dashboard_on_success(self):
         self.client.login(username="testuser1", password="Password*1")
