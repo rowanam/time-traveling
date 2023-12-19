@@ -9,9 +9,6 @@
 <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/gh/tomickigrzegorz/autocomplete@1.8.3/dist/css/autocomplete.min.css">
 
-<!-- jQuery UI -->
-<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-
 {% endblock %}
 
 
@@ -80,12 +77,12 @@
 <!-- Leaflet.Autocomplete -->
 <script src="https://cdn.jsdelivr.net/gh/tomickigrzegorz/autocomplete@1.8.3/dist/js/autocomplete.min.js"></script>
 
-<!-- jQuery UI -->
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<!-- jsDelivr :: Sortable -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 
 <!-- Initial coordinates stored as JSON -->
 {{ coordinates|json_script:"initialCoordinates" }}
 
-<script src="{% static 'js/update_locations.js' %}"></script>
+<script type="module" src="{% static 'js/update_locations.js' %}"></script>
 
 {% endblock %}

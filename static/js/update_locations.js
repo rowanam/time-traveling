@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     // -------------------- SET UP FORMS --------------------
 
     // move forms with "name" fields of "_to_delete_" to deleted forms list
@@ -378,13 +377,15 @@ $(document).ready(function () {
     });
 
     // make locations list sortable
-    $("#locations-list").sortable({
+    let locationsList = document.getElementById("locations-list");
+    new Sortable(locationsList, {
         // when user drops an item in a new position
         // reset all items' "order" fields and update polyline coordinates sequence
-        update: function (event, ui) {
-            let originalOrder = $("> p > input[id$='-order']", ui.item).val();
+        onUpdate: function (evt) {
+            let itemEl = evt.item;
+            let originalOrder = $("> p > input[id$='-order']", itemEl).val();
             reorderLocations();
-            let newOrder = $("> p > input[id$='-order']", ui.item).val();
+            let newOrder = $("> p > input[id$='-order']", itemEl).val();
 
             // update coordinates sequence and polyline on map
             moveCoordinates(originalOrder - 1, newOrder - 1);
