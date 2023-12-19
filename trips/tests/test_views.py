@@ -254,3 +254,60 @@ class TestUpdateLocationsView(TestCase):
 
         response = self.client.post("/locations/1", form_data)
         self.assertRedirects(response, "/trip/1")
+
+
+class TestLifeMapView(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        test_user1 = User.objects.create_user(
+            username="testuser1", password="Password*1"
+        )
+        test_user2 = User.objects.create_user(
+            username="testuser2", password="Password*1"
+        )
+
+        # create 2 trips for test_user1
+        trip1 = Trip.objects.create(title="Test Title", user=test_user1)
+        trip2 = Trip.objects.create(title="Test Title", user=test_user1)
+
+        # create 2 locations in trip1
+        for i in range(1, 3):
+            Location.objects.create(name="Test", lat=i, long=i, order=i, trip=trip1)
+
+        # create 3 locations in trip2
+        for i in range(1, 4):
+            Location.objects.create(
+                name="Test", lat=i * 2, long=i * 2, order=i, trip=trip2
+            )
+
+        # create a trip with 4 locations for test_user2
+        trip3 = Trip.objects.create(title="Test Title", user=test_user2)
+        for i in range(1, 5):
+            Location.objects.create(
+                name="Test", lat=i * 3, long=i * 3, order=i, trip=trip3
+            )
+
+    def test_redirect_if_not_logged_in(self):
+        response = self.client.get("/life-map/")
+        self.assertRedirects(response, "/accounts/login/?next=/life-map/")
+
+    def test_get_life_map_page_with_user_trips(self):
+        # log in testuser1
+        self.client.login(username="testuser1", password="Password*1")
+        response = self.client.get("/life-map/")
+
+        # check success status code and correct template
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "life_map.html")
+
+        # check trip, locations and locations coordinates are in context
+        self.assertTrue("coordinates" in response.context)
+
+        # coordinates contains 2 lists, and each list has correct no of locations
+        self.assertEqual(len(response.context["coordinates"]), 2)
+        self.assertEqual(len(response.context["coordinates"][0]), 2)
+        self.assertEqual(len(response.context["coordinates"][1]), 3)
+
+        # each trip coordinates list contains the correct coordinates
+        self.assertEqual(response.context["coordinates"][0], [[1, 1], [2, 2]])
+        self.assertEqual(response.context["coordinates"][1], [[2, 2], [4, 4], [6, 6]])
