@@ -32,7 +32,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
-DEBUG = os.environ.get("DEBUG", False)
+DEBUG = False
 
 ALLOWED_HOSTS = [
     os.environ.get("LOCAL_HOST"),
