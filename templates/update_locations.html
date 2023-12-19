@@ -35,19 +35,21 @@
                     {{ formset.empty_form.as_p }}
                 </div>
                 <p id="locations-instructions">
-                    Search for locations on the map and select one to add it to the trip.
+                    Search for locations on the map and select one to add it to the trip. Drag and drop locations to
+                    reorder.
                 </p>
                 <ul id="locations-list">
                     {% for form in formset.forms %}
-                        <li class="location-form">
-                            {{ form.as_p }}
-                        </li>
+                    <li class="location-form">
+                        {{ form.as_p }}
+                    </li>
                     {% endfor %}
                 </ul>
                 <ul id="deleted-locations"></ul>
                 <div>
                     <p>
-                        <button class="btn btn-basic btn-general form-submit-btn" id="save-locations-button" type="submit">Save Locations</button>
+                        <button class="btn btn-basic btn-general form-submit-btn" id="save-locations-button"
+                            type="submit">Save Locations</button>
                     </p>
                 </div>
             </form>

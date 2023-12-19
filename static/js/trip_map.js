@@ -31,12 +31,14 @@ $(document).ready(function () {
 
     let coordinates = JSON.parse(document.getElementById('coordinates').textContent);
 
-    // create a red polyline from the array of LatLng points
-    var polyline = L.polyline(coordinates, {
-        color: 'orange',
-        weight: 2,
-    }).addTo(map);
+    // create a polyline from the array of coordinates
+    if (coordinates.length >= 2) {
+        let polyline = L.polyline(coordinates, {
+            color: 'orange',
+            weight: 2,
+        }).addTo(map);
 
-    // zoom the map to the polyline
-    map.fitBounds(polyline.getBounds());
+        // zoom the map to the polyline
+        map.fitBounds(polyline.getBounds());
+    }
 });

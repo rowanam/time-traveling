@@ -218,13 +218,13 @@ $(document).ready(function () {
      * Update polyline on the map
      */
     function updatePolyline() {
+        // remove any existing polyline
+        if (polyline) {
+            polyline.remove();
+        }
+
         // only display polylines if there are at least 2 points
         if (coordinatesArray.length >= 2) {
-            // remove any existing polyline
-            if (polyline) {
-                polyline.remove();
-            }
-
             // create and display a polyline from the coordinates array
             polyline = L.polyline(coordinatesArray, {
                 color: 'orange',
@@ -266,7 +266,9 @@ $(document).ready(function () {
         $(`#id_locations-${formIndex}-name`).val(locationName);
         $(`#id_locations-${formIndex}-lat`).val(lat);
         $(`#id_locations-${formIndex}-long`).val(long);
-        $(`#id_locations-${formIndex}-order`).val(parseInt(formIndex) + 1);
+
+        let order = $("#locations-list > li").length
+        $(`#id_locations-${formIndex}-order`).val(order);
 
         // increment total forms in management form
         $("#id_locations-TOTAL_FORMS").val(parseInt(formIndex) + 1);
@@ -344,6 +346,14 @@ $(document).ready(function () {
             currentLocationObject = null;
             auto.destroy();
 
+            // clear the map
+            map.eachLayer(function (layer) {
+                if (!!layer.toGeoJSON) {
+                    map.removeLayer(layer);
+                }
+            });
+
+            // add coordinates to locations array and diplay polyline
             addCoordinates(currentCoordinates, false);
         }
     });

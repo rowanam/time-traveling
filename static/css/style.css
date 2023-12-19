@@ -325,6 +325,11 @@ footer {
     display: inline-block;
 }
 
+.trip-detail-btn {
+    margin-left: 1rem;
+    display: inline-block;
+}
+
 .trip-detail-dates {
     font-family: 'Cormorant Garamond', Lato, sans-serif;
     font-size: 1.2rem;

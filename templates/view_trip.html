@@ -14,10 +14,10 @@
     <div class="row">
         <div class="col">
             <h1>{{ trip.title }}</h1>
-            <a class="edit-icon-btn trip-card-btn" href="{% url 'edit_trip' trip.id %}" role="button"><i
+            <a class="edit-icon-btn trip-detail-btn" href="{% url 'edit_trip' trip.id %}" role="button"><i
                     class="fa-solid fa-pencil"></i></a>
-            <button class="delete-icon-btn trip-card-btn" type="button" data-bs-toggle="modal"
-                data-bs-target="#modal"><i class="fa-solid fa-trash"></i></button>
+            <button class="delete-icon-btn trip-detail-btn" type="button" data-bs-toggle="modal"
+                data-bs-target="#modal-{{ trip.id }}"><i class="fa-solid fa-trash"></i></button>
         </div>
     </div>
     <div class="row">
@@ -30,11 +30,16 @@
             <p class="trip-detail-note">{{ trip.note }}</p>
             {% endif %}
 
+            {% if locations %}
             <ul class="trip-timeline">
                 {% for location in locations %}
                 <li class="trip-timeline-item">{{ location.name }}</li>
                 {% endfor %}
             </ul>
+            {% else %}
+            <p>No locations in this trip.</p>
+            <a class="btn btn-basic btn-general" href="{% url 'locations' trip.id %}" role="button">Add locations</a>
+            {% endif %}
         </div>
         <div class="col-md-8 order-md-2">
             <div class="trip-map" id="map"></div>
